@@ -1,0 +1,39 @@
+{
+  "name": "punaime-backend",
+  "version": "2.0.0",
+  "description": "Backend server for Platforma (WorkPulse) job application platform",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node src/server.js",
+    "test": "node --test",
+    "migrate": "node scripts/migrate.js",
+    "seed": "node scripts/seed.js",
+    "setup-db": "npm run migrate && npm run seed",
+    "check": "node --check src/server.js"
+  },
+  "keywords": [
+    "platforma",
+    "workpulse",
+    "jobs",
+    "kosovo"
+  ],
+  "author": "PunaIme Team",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.4",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "express": "^4.22.1",
+    "express-rate-limit": "^8.2.1",
+    "express-validator": "^7.3.1",
+    "google-auth-library": "^9.15.1",
+    "helmet": "^8.1.0",
+    "multer": "^2.0.2",
+    "nanoid": "^5.1.6",
+    "nodemailer": "^6.10.1",
+    "sql.js": "^1.13.0"
+  }
+}

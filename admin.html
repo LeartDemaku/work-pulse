@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="sq">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Platforma</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles/theme.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="icon" href="LOGO-PunaIme.png">
+    <style>
+        .admin-layout {
+            padding: 120px 20px 50px;
+            min-height: 100vh;
+            background: var(--bg-body);
+            color: var(--text-main);
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .admin-header {
+            margin-bottom: 20px;
+        }
+
+        .admin-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 22px;
+            color: var(--text-main);
+            box-shadow: var(--shadow-md);
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .kpi {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            border-radius: 12px;
+            padding: 18px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .kpi .num {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+            color: var(--text-main);
+        }
+
+        th {
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        .inline-form {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .inline-form input,
+        .inline-form select {
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-body);
+            color: var(--text-main);
+        }
+
+        .inline-form button {
+            padding: 10px 14px;
+            border: 0;
+            border-radius: 8px;
+            background: var(--primary);
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .inline-form button:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 980px) {
+            .kpi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .logo span {
+                font-size: 18px;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 16px;
+                right: 16px;
+                background: var(--bg-card);
+                border: 1px solid var(--border-color);
+                border-radius: 12px;
+                padding: 10px;
+                box-shadow: var(--shadow-lg);
+                z-index: 1000;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            nav ul li {
+                width: 100%;
+            }
+
+            nav ul li a {
+                display: block;
+                padding: 12px;
+                text-align: center;
+                border-radius: 8px;
+            }
+
+            .nav-buttons {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .table-container {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            table {
+                min-width: 600px;
+            }
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <header id="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <img src="LOGO-PunaIme.png" alt="PunaIme Logo" />
+                    <span>PunaIme</span>
+                </a>
+                <nav>
+                    <ul id="nav-menu">
+                        <li><a href="index.html">Kryefaqja</a></li>
+                        <li><a href="jobseeker-dashboard.html">Kandidati</a></li>
+                        <li><a href="employer-dashboard.html">Kompania</a></li>
+                        <li><a href="admin.html" class="active">Admin</a></li>
+                    </ul>
+                </nav>
+                <div class="nav-buttons">
+                    <a href="#" id="logoutBtn" class="btn btn-primary">Dil</a>
+                </div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="admin-layout">
+        <div class="admin-container">
+            <div class="admin-header">
+                <h1><i class="fas fa-shield-alt"></i> Admin Governance</h1>
+                <p>Moderim i platformës, menaxhim i përdoruesve dhe raportime operative.</p>
+            </div>
+
+            <section class="kpi-grid" id="kpiGrid"></section>
+
+            <section class="admin-grid">
+                <div class="card">
+                    <h3><i class="fas fa-users"></i> Përdoruesit</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Emri</th>
+                                <th>Email</th>
+                                <th>Roli</th>
+                                <th>Status</th>
+                                <th>Veprim</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody"></tbody>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-flag"></i> Raporte t� hapura</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Target</th>
+                                <th>Arsyeja</th>
+                                <th>Status</th>
+                                <th>Veprim</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reportsTableBody"></tbody>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-briefcase"></i> Moderim i shpejtë i shpalljes</h3>
+                    <form id="jobModerationForm" class="inline-form">
+                        <input type="number" id="moderationJobId" placeholder="Job ID" min="1" required>
+                        <select id="moderationStatus" required>
+                            <option value="active">active</option>
+                            <option value="paused">paused</option>
+                            <option value="removed">removed</option>
+                        </select>
+                        <button type="submit">Apliko statusin</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="script/config.js"></script>
+    <script src="script/shared/api.js"></script>
+    <script src="script/shared/auth.js"></script>
+    <script src="script/shared/toast.js"></script>
+    <script src="script/shared/theme-manager.js"></script>
+    <script src="script/admin.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,721 @@
+﻿<!DOCTYPE html>
+<html lang="sq">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aplikimet e Kompanisë - Platforma</title>
+  <link rel="stylesheet" href="styles/theme.css">
+  <link rel="stylesheet" href="styles/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Manrope:wght@500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="icon" href="LOGO-PunaIme.png">
+
+  <style>
+    :root {
+      --app-ink: var(--text-main);
+      --app-muted: var(--text-muted);
+      --app-border: var(--border-color);
+      --app-accent: var(--primary);
+      --app-accent-soft: var(--primary-tint);
+      --app-shadow: var(--shadow-md);
+      /* Dashboard UI Aliases */
+      --dash-ink: var(--app-ink);
+      --dash-accent: var(--app-accent);
+    }
+
+    body.employer-applications-page {
+      background: var(--bg-body);
+      color: var(--text-main);
+      min-height: 100vh;
+    }
+
+    .page-shell {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 116px 20px 56px;
+    }
+
+    .reveal {
+      animation: rise-in 500ms ease both;
+    }
+
+    .reveal-delay-1 {
+      animation-delay: 80ms;
+    }
+
+    .reveal-delay-2 {
+      animation-delay: 140ms;
+    }
+
+    .reveal-delay-3 {
+      animation-delay: 200ms;
+    }
+
+    @keyframes rise-in {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* User Dropdown Styles */
+    .user-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .user-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-family: inherit;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s;
+    }
+
+    .user-btn:hover {
+      background: var(--bg-body);
+      border-color: var(--primary);
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 100%;
+      margin-top: 8px;
+      background-color: var(--bg-card);
+      min-width: 150px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 6px;
+      z-index: 50;
+    }
+
+    .dropdown-content.show {
+      display: block;
+      animation: dropdownFadeIn 0.15s ease-out;
+    }
+
+    .dropdown-content a {
+      color: var(--text-main);
+      padding: 10px 14px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      transition: background 0.15s;
+    }
+
+    .dropdown-content a:hover {
+      background-color: var(--primary-tint);
+      color: var(--primary);
+    }
+
+    @keyframes dropdownFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 21px;
+      font-weight: 800;
+      color: var(--text-main);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    .logo img {
+      height: 60px;
+      width: auto;
+      filter: drop-shadow(0 4px 6px rgba(37, 99, 235, 0.15));
+      transition: transform 0.3s ease;
+    }
+
+    .logo span {
+      background: linear-gradient(135deg, var(--text-main) 20%, var(--primary) 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      box-shadow: var(--shadow-md);
+      padding: 22px;
+      color: var(--text-main);
+    }
+
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      gap: 22px;
+      align-items: flex-start;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -60px;
+      top: -52px;
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, rgba(37, 99, 235, 0.16), transparent 65%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: "Sora", sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--primary);
+      background: var(--primary-tint);
+      border: 1px solid var(--border-color);
+      border-radius: 999px;
+      padding: 5px 10px;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .hero h1 {
+      font-family: "Sora", sans-serif;
+      font-size: clamp(1.7rem, 3vw, 2.2rem);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .hero-subtitle {
+      color: var(--text-muted);
+      max-width: 680px;
+      font-size: 1.02rem;
+    }
+
+    .hero-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      border: 1px solid var(--border-chip);
+      border-radius: 999px;
+      background: var(--bg-chip);
+      color: var(--text-chip);
+      padding: 7px 12px;
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 245px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-lg {
+      min-height: 46px;
+      font-weight: 700;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .metric-card {
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      background: var(--bg-card);
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+      min-height: 134px;
+      transition: transform 220ms ease, box-shadow 220ms ease;
+      color: var(--text-main);
+    }
+
+    .metric-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #2563eb, #10b981);
+    }
+
+    .metric-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 28px -24px rgba(37, 99, 235, 0.7);
+    }
+
+    .metric-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--primary-tint);
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .metric-value {
+      font-family: "Sora", sans-serif;
+      font-size: clamp(1.45rem, 2.2vw, 1.9rem);
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 5px;
+    }
+
+    .metric-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr 0.8fr auto;
+      gap: 10px;
+      margin: 16px 0 12px;
+    }
+
+    .toolbar input,
+    .toolbar select {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      font-family: "Manrope", sans-serif;
+      font-size: 0.92rem;
+      color: var(--text-main);
+      background: var(--bg-body);
+      transition: border-color 160ms ease, box-shadow 160ms ease;
+    }
+
+    .toolbar input:focus,
+    .toolbar select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+
+    .applications-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .application-card {
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 14px;
+      background: var(--bg-card);
+      transition: border-color 220ms ease, transform 220ms ease, box-shadow 220ms ease;
+    }
+
+    .application-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-1px);
+      box-shadow: 0 16px 28px -24px rgba(37, 99, 235, 0.62);
+    }
+
+    .app-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .candidate-name {
+      font-family: "Sora", sans-serif;
+      font-size: 1.02rem;
+      margin-bottom: 2px;
+    }
+
+    .app-meta {
+      font-size: 0.86rem;
+      color: var(--app-muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .badge {
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      border: 1px solid transparent;
+      text-transform: capitalize;
+      white-space: nowrap;
+    }
+
+    .status-submitted {
+      background: var(--status-submitted-bg);
+      color: var(--status-submitted-text);
+      border-color: var(--status-submitted-text);
+    }
+
+    .status-reviewing {
+      background: var(--status-reviewing-bg);
+      color: var(--status-reviewing-text);
+      border-color: var(--status-reviewing-text);
+    }
+
+    .status-shortlisted {
+      background: var(--status-shortlisted-bg);
+      color: var(--status-shortlisted-text);
+      border-color: var(--status-shortlisted-text);
+    }
+
+    .status-interview {
+      background: var(--status-interview-bg);
+      color: var(--status-interview-text);
+      border-color: var(--status-interview-text);
+    }
+
+    .status-rejected {
+      background: var(--status-rejected-bg);
+      color: var(--status-rejected-text);
+      border-color: var(--status-rejected-text);
+    }
+
+    .status-withdrawn {
+      background: var(--bg-body);
+      color: var(--text-muted);
+      border-color: var(--border-color);
+    }
+
+    .app-body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .cover-letter {
+      font-size: 0.88rem;
+      color: var(--text-main);
+      background: var(--bg-body);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 10px;
+      max-height: 120px;
+      overflow: auto;
+    }
+
+    .app-actions {
+      min-width: 290px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .app-actions select,
+    .app-actions textarea {
+      width: 100%;
+      padding: 9px 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 9px;
+      font-family: "Manrope", sans-serif;
+      font-size: 0.88rem;
+      background: var(--bg-body);
+      color: var(--text-main);
+    }
+
+    .app-actions textarea {
+      min-height: 70px;
+      resize: vertical;
+    }
+
+    .inline-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .inline-actions .btn {
+      min-height: 34px;
+      font-size: 0.82rem;
+      padding: 0 11px;
+    }
+
+    .empty-state {
+      border: 1px dashed var(--border-color);
+      border-radius: 14px;
+      background: var(--bg-card);
+      padding: 24px;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .empty-state i {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--primary-tint);
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .empty-state h3 {
+      font-family: "Sora", sans-serif;
+      color: var(--text-main);
+      margin-bottom: 4px;
+      font-size: 1.03rem;
+    }
+
+    @media (max-width: 1020px) {
+      .hero {
+        flex-direction: column;
+      }
+
+      .hero-cta {
+        width: 100%;
+        min-width: 0;
+        flex-direction: row;
+      }
+
+      .hero-cta .btn {
+        flex: 1;
+      }
+
+      .metrics-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .toolbar {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .app-body {
+        grid-template-columns: 1fr;
+      }
+
+      .app-actions {
+        min-width: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+
+      .hero-cta,
+      .metrics-grid,
+      .toolbar {
+        grid-template-columns: 1fr;
+        flex-direction: column;
+      }
+
+      .inline-actions .btn {
+        width: 100%;
+      }
+
+      #nav-menu.active {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 66px;
+        left: 12px;
+        right: 12px;
+        border-radius: 16px;
+        border: 1px solid var(--border-color);
+        background: var(--bg-card);
+        backdrop-filter: blur(14px);
+        padding: 10px;
+        box-shadow: var(--shadow-lg);
+        z-index: 1000;
+        gap: 4px;
+      }
+
+      #nav-menu.active a {
+        width: 100%;
+        text-align: center;
+        padding: 12px;
+        border-radius: 10px;
+        font-weight: 500;
+      }
+
+      #nav-menu.active a:hover {
+        background: var(--primary-tint);
+        color: var(--primary);
+      }
+    }
+  </style>
+</head>
+
+<body class="employer-applications-page">
+  <header id="header">
+    <div class="container">
+      <div class="header-content">
+        <a href="index.html" class="logo"><img src="LOGO-PunaIme.png" alt="logo"><span>WorkPulse</span></a>
+        <nav>
+          <ul id="nav-menu">
+            <li><a href="employer-dashboard.html">Dashboard</a></li>
+            <li><a href="employer-jobs.html">Shpalljet</a></li>
+            <li><a href="employer-applications.html" class="active">Aplikimet</a></li>
+            <li><a href="employer-company-settings.html">Kompania</a></li>
+          </ul>
+        </nav>
+        <div class="nav-buttons">
+          <a href="employer-dashboard.html" class="btn btn-outline"
+            style="margin-right: 12px; border-radius: 8px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; padding: 8px 16px; border: 1px solid #4c4c4c; color: #135ee9; transition: all 0.2s;">Paneli</a>
+          <div class="user-dropdown">
+            <button class="user-btn" id="userMenuBtn">
+              <span id="userDisplayName"></span>
+              <i class="fas fa-chevron-down" style="font-size: 0.8em; color: #64748b;"></i>
+            </button>
+            <div class="dropdown-content" id="userDropdown">
+              <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Dil</a>
+            </div>
+          </div>
+        </div>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Hap menunë">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="panel hero reveal">
+      <div>
+        <span class="eyebrow"><i class="fa-solid fa-users-viewfinder"></i> Candidate Pipeline</span>
+        <h1>Menaxho aplikimet me qartësi dhe ritëm.</h1>
+        <p class="hero-subtitle">Filtro kandidatë, përditëso statuset, shto shënime dhe mbaj një pipeline të organizuar
+          për çdo pozicion.</p>
+        <div class="hero-chips">
+          <span class="chip"><i class="fa-solid fa-filter"></i> Filtrim i avancuar</span>
+          <span class="chip"><i class="fa-solid fa-paper-plane"></i> Njoftime automatike</span>
+          <span class="chip"><i class="fa-solid fa-file-csv"></i> Eksport i menjëhershëm</span>
+        </div>
+      </div>
+      <div class="hero-cta">
+        <a class="btn btn-primary btn-lg" style="background-color: #304cda; color: white; border-radius: 15px;"
+          href="employer-jobs.html"><i class="fa-solid fa-plus"></i> Krijo shpallje</a>
+        <button class="btn btn-outline btn-lg" type="button" id="exportCsvBtn"><i class="fa-solid fa-download"></i>
+          Eksporto CSV</button>
+      </div>
+    </section>
+
+    <section id="appsMetrics" class="metrics-grid reveal reveal-delay-1" aria-live="polite">
+      <article class="metric-card">
+        <div class="metric-icon"><i class="fa-solid fa-file-signature"></i></div>
+        <div class="metric-value" id="metricTotal">0</div>
+        <div class="metric-label">Totali i aplikimeve</div>
+      </article>
+      <article class="metric-card">
+        <div class="metric-icon"><i class="fa-regular fa-clock"></i></div>
+        <div class="metric-value" id="metricPending">0</div>
+        <div class="metric-label">Në shqyrtim</div>
+      </article>
+      <article class="metric-card">
+        <div class="metric-icon"><i class="fa-solid fa-user-check"></i></div>
+        <div class="metric-value" id="metricInterview">0</div>
+        <div class="metric-label">Intervista</div>
+      </article>
+      <article class="metric-card">
+        <div class="metric-icon"><i class="fa-solid fa-trophy"></i></div>
+        <div class="metric-value" id="metricHired">0</div>
+        <div class="metric-label">Punësime</div>
+      </article>
+    </section>
+
+    <section class="panel reveal reveal-delay-2">
+      <div class="toolbar">
+        <input id="searchInput" placeholder="Kërko sipas kandidatit, pozicionit ose referencës...">
+        <select id="statusFilter" aria-label="Filtro sipas statusit">
+          <option value="all">Të gjitha statuset</option>
+          <option value="submitted">Dërguar</option>
+          <option value="viewed">Parë</option>
+          <option value="shortlisted">Në listë të shkurtër</option>
+          <option value="interview">Intervistë</option>
+          <option value="offer">Ofertë</option>
+          <option value="rejected">Refuzuar</option>
+          <option value="hired">Punësuar</option>
+          <option value="withdrawn">Tërhequr</option>
+        </select>
+        <select id="jobFilter" aria-label="Filtro sipas pozitës">
+          <option value="all">Të gjitha pozitat</option>
+        </select>
+        <button id="resetFiltersBtn" class="btn btn-outline" type="button"><i class="fa-solid fa-rotate-left"></i>
+          Reset</button>
+      </div>
+
+      <div id="applicationsList" class="applications-list reveal reveal-delay-3">
+        <div class="empty-state">
+          <i class="fa-solid fa-spinner fa-spin"></i>
+          <h3>Duke ngarkuar aplikimet...</h3>
+          <p>Ju lutemi prisni pak.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script/config.js"></script>
+  <script src="script/shared/api.js"></script>
+  <script src="script/shared/auth.js"></script>
+  <script src="script/shared/toast.js"></script>
+  <script src="script/shared/theme-manager.js"></script>
+  <script src="script/employer/applications.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,885 @@
+﻿<!DOCTYPE html>
+<html lang="sq">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shpalljet e Kompanisë - Platforma</title>
+  <link rel="stylesheet" href="styles/theme.css">
+  <link rel="stylesheet" href="styles/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Manrope:wght@500;600;700&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="icon" href="LOGO-PunaIme.png">
+
+  <style>
+    :root {
+      --emp-ink: var(--text-main);
+      --emp-muted: var(--text-muted);
+      --emp-border: var(--border-color);
+      --emp-card: var(--bg-card);
+      --emp-accent: var(--primary);
+      --emp-accent-soft: var(--primary-tint);
+      --emp-shadow: var(--shadow-md);
+      /* Dashboard UI Aliases */
+      --dash-ink: var(--emp-ink);
+      --dash-accent: var(--emp-accent);
+    }
+
+    body.employer-jobs-page {
+      background: var(--bg-body);
+      color: var(--text-main);
+      min-height: 100vh;
+    }
+
+    .page-shell {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 116px 20px 56px;
+    }
+
+    .reveal {
+      animation: rise-in 500ms ease both;
+    }
+
+    .reveal-delay-1 {
+      animation-delay: 80ms;
+    }
+
+    .reveal-delay-2 {
+      animation-delay: 140ms;
+    }
+
+    .reveal-delay-3 {
+      animation-delay: 200ms;
+    }
+
+    @keyframes rise-in {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* User Dropdown Styles */
+    .user-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .user-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-family: inherit;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s;
+    }
+
+    .user-btn:hover {
+      background: var(--bg-body);
+      border-color: var(--primary);
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 100%;
+      margin-top: 8px;
+      background-color: var(--bg-card);
+      min-width: 150px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 6px;
+      z-index: 50;
+    }
+
+    .dropdown-content.show {
+      display: block;
+      animation: dropdownFadeIn 0.15s ease-out;
+    }
+
+    .dropdown-content a {
+      color: var(--text-main);
+      padding: 10px 14px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      transition: background 0.15s;
+    }
+
+    .dropdown-content a:hover {
+      background-color: var(--primary-tint);
+      color: var(--primary);
+    }
+
+    @keyframes dropdownFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 21px;
+      font-weight: 800;
+      color: var(--text-main);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    .logo img {
+      height: 60px;
+      width: auto;
+      filter: drop-shadow(0 4px 6px rgba(37, 99, 235, 0.15));
+      transition: transform 0.3s ease;
+    }
+
+    .logo span {
+      background: linear-gradient(135deg, var(--text-main) 20%, var(--primary) 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      box-shadow: var(--shadow-md);
+      padding: 22px;
+      color: var(--text-main);
+    }
+
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      gap: 22px;
+      align-items: flex-start;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -60px;
+      top: -52px;
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, rgba(37, 99, 235, 0.16), transparent 65%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: "Sora", sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--primary);
+      background: var(--primary-tint);
+      border: 1px solid var(--border-color);
+      border-radius: 999px;
+      padding: 5px 10px;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .hero h1 {
+      font-family: "Sora", sans-serif;
+      font-size: clamp(1.7rem, 3vw, 2.2rem);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .hero-subtitle {
+      color: var(--text-muted);
+      max-width: 680px;
+      font-size: 1.02rem;
+    }
+
+    .hero-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      border: 1px solid var(--border-chip);
+      border-radius: 999px;
+      background: var(--bg-chip);
+      color: var(--text-chip);
+      padding: 7px 12px;
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 245px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-lg {
+      min-height: 46px;
+      font-weight: 700;
+    }
+
+    .section-head {
+      margin-bottom: 14px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .section-head h2 {
+      font-family: "Sora", sans-serif;
+      font-size: 1.16rem;
+      letter-spacing: -0.015em;
+    }
+
+    .section-head p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .metric-card {
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      background: var(--bg-card);
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+      min-height: 136px;
+      transition: transform 220ms ease, box-shadow 220ms ease;
+      color: var(--text-main);
+    }
+
+    .metric-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #2563eb, #10b981);
+    }
+
+    .metric-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 28px -24px rgba(37, 99, 235, 0.7);
+    }
+
+    .metric-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--primary-tint);
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .metric-value {
+      font-family: "Sora", sans-serif;
+      font-size: clamp(1.5rem, 2.2vw, 1.9rem);
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 5px;
+    }
+
+    .metric-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .form-group {
+      display: grid;
+      gap: 6px;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-group label {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      font-family: "Manrope", sans-serif;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      background: var(--bg-body);
+      transition: border-color 160ms ease, box-shadow 160ms ease;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    .helper-note {
+      font-size: 0.82rem;
+      color: var(--emp-muted);
+    }
+
+    .jobs-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .jobs-toolbar select {
+      width: auto;
+      min-width: 180px;
+    }
+
+    .jobs-list {
+      display: grid;
+      gap: 10px;
+      max-height: 620px;
+      overflow: auto;
+      padding-right: 2px;
+    }
+
+    .jobs-list::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .jobs-list::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 999px;
+    }
+
+    .job-card {
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 14px;
+      background: var(--bg-body);
+      transition: border-color 220ms ease, transform 220ms ease, box-shadow 220ms ease;
+    }
+
+    .job-card:hover {
+      border-color: #9dbcf6;
+      transform: translateY(-1px);
+      box-shadow: 0 16px 28px -24px rgba(37, 99, 235, 0.62);
+    }
+
+    .job-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+
+    .job-title {
+      font-family: "Sora", sans-serif;
+      font-size: 1.02rem;
+      margin-bottom: 4px;
+    }
+
+    .job-meta {
+      color: var(--emp-muted);
+      font-size: 0.86rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .badge {
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      border: 1px solid transparent;
+      text-transform: capitalize;
+      white-space: nowrap;
+    }
+
+    .status-active {
+      background: #ecfdf3;
+      color: #047857;
+      border-color: #86efac;
+    }
+
+    .status-draft {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border-color: #bfdbfe;
+    }
+
+    .status-paused {
+      background: #fff7ed;
+      color: #c2410c;
+      border-color: #fdba74;
+    }
+
+    .status-closed {
+      background: #fef2f2;
+      color: #b91c1c;
+      border-color: #fecaca;
+    }
+
+    .job-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .job-stats {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .stat-pill {
+      font-size: 0.78rem;
+      color: #1e3a8a;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 999px;
+      padding: 5px 9px;
+      font-weight: 700;
+    }
+
+    .stat-pill.safe {
+      background: #ecfdf3;
+      color: #047857;
+      border-color: #86efac;
+    }
+
+    .stat-pill.warn {
+      background: #fff7ed;
+      color: #c2410c;
+      border-color: #fdba74;
+    }
+
+    .stat-pill.danger {
+      background: #fef2f2;
+      color: #b91c1c;
+      border-color: #fecaca;
+    }
+
+    .job-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .job-actions .btn {
+      min-height: 34px;
+      font-size: 0.82rem;
+      padding: 0 11px;
+    }
+
+    .job-actions .delete-btn {
+      border-color: #fecaca;
+      color: #b91c1c;
+      background: #fff5f5;
+    }
+
+    .job-actions .delete-btn:hover {
+      border-color: #ef4444;
+      color: #ffffff;
+      background: #dc2626;
+    }
+
+    .empty-state {
+      border: 1px dashed var(--border-color);
+      border-radius: 14px;
+      background: var(--bg-body);
+      padding: 24px;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .empty-state i {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--primary-tint);
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .empty-state h3 {
+      font-family: "Sora", sans-serif;
+      color: var(--text-main);
+      margin-bottom: 4px;
+      font-size: 1.03rem;
+    }
+
+    @media (max-width: 1020px) {
+      .hero {
+        flex-direction: column;
+      }
+
+      .hero-cta {
+        width: 100%;
+        min-width: 0;
+        flex-direction: row;
+      }
+
+      .hero-cta .btn {
+        flex: 1;
+      }
+
+      .metrics-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-cta {
+        flex-direction: column;
+      }
+
+      .metrics-grid,
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .job-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .job-actions,
+      .job-actions .btn {
+        width: 100%;
+      }
+
+      #nav-menu.active {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 66px;
+        left: 12px;
+        right: 12px;
+        border-radius: 16px;
+        border: 1px solid var(--border-color);
+        background: var(--bg-card);
+        backdrop-filter: blur(14px);
+        padding: 10px;
+        box-shadow: var(--shadow-lg);
+        z-index: 1000;
+        gap: 4px;
+      }
+
+      #nav-menu.active a {
+        width: 100%;
+        text-align: center;
+        padding: 12px;
+        border-radius: 10px;
+        font-weight: 500;
+      }
+
+      #nav-menu.active a:hover {
+        background: var(--primary-tint);
+        color: var(--primary);
+      }
+    }
+  </style>
+</head>
+
+<body class="employer-jobs-page">
+  <header id="header">
+    <div class="container">
+      <div class="header-content">
+        <a href="index.html" class="logo"><img src="LOGO-PunaIme.png" alt="logo"><span>WorkPulse</span></a>
+        <nav>
+          <ul id="nav-menu">
+            <li><a href="employer-dashboard.html">Dashboard</a></li>
+            <li><a href="employer-jobs.html" class="active">Shpalljet</a></li>
+            <li><a href="employer-applications.html">Aplikimet</a></li>
+            <li><a href="employer-company-settings.html">Kompania</a></li>
+          </ul>
+        </nav>
+        <div class="nav-buttons">
+          <a href="employer-dashboard.html" class="btn btn-outline"
+            style="margin-right: 12px; border-radius: 8px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; padding: 8px 16px; border: 1px solid #4c4c4c; color: #135ee9; transition: all 0.2s;">Paneli</a>
+          <div class="user-dropdown">
+            <button class="user-btn" id="userMenuBtn">
+              <span id="userDisplayName"></span>
+              <i class="fas fa-chevron-down" style="font-size: 0.8em; color: #64748b;"></i>
+            </button>
+            <div class="dropdown-content" id="userDropdown">
+              <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Dil</a>
+            </div>
+          </div>
+        </div>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Hap menunë">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="panel hero reveal">
+      <div>
+        <span class="eyebrow"><i class="fa-solid fa-briefcase"></i> Job Control Center</span>
+        <h1><span class="gradient-text">Menaxho shpalljet me standard profesional.</span></h1>
+        <p class="hero-subtitle">Krijo, organizo dhe përditëso çdo shpallje nga një panel i vetëm, me qartësi të plotë
+          mbi statusin dhe aplikimet.</p>
+        <div class="hero-chips">
+          <span class="chip"><i class="fa-solid fa-rocket"></i> Publikim i shpejtë</span>
+          <span class="chip"><i class="fa-solid fa-chart-line"></i> Insight për performancën</span>
+          <span class="chip"><i class="fa-regular fa-clock"></i> Fokus tek afatet</span>
+        </div>
+      </div>
+      <div class="hero-cta">
+        <button class="btn btn-primary btn-lg" style="background-color: #304cda; color: white; border-radius: 15px;"
+          id="focusCreateJobBtn"><i class="fa-solid fa-plus"></i>
+          Krijo shpallje</button>
+        <a class="btn btn-outline btn-lg" href="employer-applications.html"><i class="fa-solid fa-users"></i> Shiko
+          aplikimet</a>
+      </div>
+    </section>
+
+    <section id="jobsMetrics" class="metrics-grid reveal reveal-delay-1" aria-live="polite">
+      <article class="metric-card">
+        <div class="metric-icon"><i class="fa-solid fa-briefcase"></i></div>
+        <div class="metric-value" id="metricTotal">0</div>
+        <div class="metric-label">Totali i shpalljeve</div>
+      </article>
+      <article class="metric-card">
+        <div class="metric-icon"><i class="fa-solid fa-play"></i></div>
+        <div class="metric-value" id="metricActive">0</div>
+        <div class="metric-label">Shpallje aktive</div>
+      </article>
+      <article class="metric-card">
+        <div class="metric-icon"><i class="fa-solid fa-pause"></i></div>
+        <div class="metric-value" id="metricPaused">0</div>
+        <div class="metric-label">Shpallje në pauzë</div>
+      </article>
+      <article class="metric-card">
+        <div class="metric-icon"><i class="fa-solid fa-file-signature"></i></div>
+        <div class="metric-value" id="metricApplications">0</div>
+        <div class="metric-label">Aplikime totale</div>
+      </article>
+    </section>
+
+    <section class="content-grid reveal reveal-delay-2">
+      <article class="panel" id="createJobPanel">
+        <div class="section-head">
+          <h2>Krijo shpallje të re</h2>
+          <p>Plotëso fushat kryesore për publikim</p>
+        </div>
+
+        <form id="addJobForm">
+          <div class="form-grid">
+            <div class="form-group full">
+              <label for="jobTitle">Titulli i pozicionit</label>
+              <input id="jobTitle" placeholder="p.sh. Frontend Developer" required>
+            </div>
+
+            <div class="form-group">
+              <label for="jobLocation">Lokacioni</label>
+              <input id="jobLocation" placeholder="p.sh. Prishtinë" value="Prishtinë">
+            </div>
+
+            <div class="form-group">
+              <label for="jobPositions">Numri i pozitave</label>
+              <input id="jobPositions" type="number" min="1" value="1">
+            </div>
+
+            <div class="form-group">
+              <label for="jobDeadline">Afati i aplikimit</label>
+              <input id="jobDeadline" type="datetime-local">
+            </div>
+
+            <div class="form-group">
+              <label for="jobEmploymentType">Lloji i punësimit</label>
+              <select id="jobEmploymentType">
+                <option value="full_time">Full-time</option>
+                <option value="part_time">Part-time</option>
+                <option value="internship">Internship</option>
+                <option value="contract">Contract</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="jobExperienceLevel">Niveli i përvojës</label>
+              <select id="jobExperienceLevel">
+                <option value="entry">Entry</option>
+                <option value="mid">Mid</option>
+                <option value="senior">Senior</option>
+                <option value="lead">Lead</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="jobWorkMode">Modaliteti i punës</label>
+              <select id="jobWorkMode">
+                <option value="onsite">On-site</option>
+                <option value="remote">Remote</option>
+                <option value="hybrid">Hybrid</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="jobStatus">Statusi fillestar</label>
+              <select id="jobStatus">
+                <option value="active">Aktiv</option>
+                <option value="draft">Draft</option>
+              </select>
+            </div>
+
+            <div class="form-group full">
+              <label for="jobSkills">Aftësitë e kërkuara</label>
+              <input id="jobSkills" placeholder="ndarje me presje, p.sh. React, TypeScript, SQL">
+              <p class="helper-note">Këshillë: përdor 4-8 aftësi që reflektojnë pozicionin.</p>
+            </div>
+
+            <div class="form-group full">
+              <label for="jobDescription">Përshkrimi i rolit</label>
+              <textarea id="jobDescription" placeholder="Përshkruaj përgjegjësitë, kërkesat dhe benefitet"
+                required></textarea>
+            </div>
+          </div>
+
+          <button class="btn btn-primary" type="submit" style="margin-top: 12px;"><i class="fa-solid fa-check"></i>
+            Publiko shpalljen</button>
+        </form>
+      </article>
+
+      <article class="panel">
+        <div class="section-head">
+          <h2>Shpalljet e kompanisë</h2>
+          <p>Kontroll i statusit dhe duplikim i shpejtë</p>
+        </div>
+
+        <div class="jobs-toolbar">
+          <select id="jobsStatusFilter" aria-label="Filtro shpalljet sipas statusit">
+            <option value="all">Të gjitha statuset</option>
+            <option value="active">Vetëm aktive</option>
+            <option value="draft">Vetëm draft</option>
+            <option value="paused">Vetëm në pauzë</option>
+            <option value="closed">Vetëm të mbyllura</option>
+          </select>
+          <span class="helper-note" id="jobsCountNote">0 shpallje</span>
+        </div>
+
+        <div class="jobs-list" id="jobsList">
+          <div class="empty-state">
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            <h3>Duke ngarkuar shpalljet...</h3>
+            <p>Ju lutemi prisni pak.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script src="script/config.js"></script>
+  <script src="script/shared/api.js"></script>
+  <script src="script/shared/auth.js"></script>
+  <script src="script/shared/toast.js"></script>
+  <script src="script/shared/theme-manager.js"></script>
+  <script src="script/employer/jobs.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,844 @@
+﻿<!DOCTYPE html>
+<html lang="sq">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aplikimet e Mia - Platforma</title>
+  <link rel="stylesheet" href="styles/theme.css">
+  <link rel="stylesheet" href="styles/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Manrope:wght@500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="icon" href="LOGO-PunaIme.png">
+  <style>
+    :root {
+      --js-card: var(--bg-card);
+      --js-ink: var(--text-main);
+      --js-muted: var(--text-muted);
+      --js-border: var(--border-color);
+      --js-primary: var(--primary);
+      --js-primary-soft: var(--primary-tint);
+      --js-shadow: var(--shadow-md);
+    }
+
+    body.jobseeker-applications-page {
+      background: var(--bg-body);
+      color: var(--text-main);
+      min-height: 100vh;
+    }
+
+    .page-shell {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 116px 20px 56px;
+    }
+
+    .reveal {
+      animation: rise 520ms ease both;
+    }
+
+    .delay-1 {
+      animation-delay: 80ms;
+    }
+
+    .delay-2 {
+      animation-delay: 140ms;
+    }
+
+    .delay-3 {
+      animation-delay: 200ms;
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* User Dropdown Styles */
+    .user-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .user-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-family: inherit;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s;
+    }
+
+    .user-btn:hover {
+      background: var(--bg-body);
+      border-color: var(--primary);
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 100%;
+      margin-top: 8px;
+      background-color: var(--bg-card);
+      min-width: 150px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 6px;
+      z-index: 50;
+    }
+
+    .dropdown-content.show {
+      display: block;
+      animation: dropdownFadeIn 0.15s ease-out;
+    }
+
+    .dropdown-content a {
+      color: var(--text-main);
+      padding: 10px 14px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      transition: background 0.15s;
+    }
+
+    .dropdown-content a:hover {
+      background-color: var(--primary-tint);
+      color: var(--primary);
+    }
+
+    @keyframes dropdownFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      box-shadow: var(--shadow-md);
+      padding: 22px;
+      color: var(--text-main);
+    }
+
+    .page-header {
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .page-title h1 {
+      font-family: "Sora", sans-serif;
+      font-size: clamp(1.7rem, 3vw, 2.15rem);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .page-title p {
+      color: var(--text-muted);
+      max-width: 640px;
+      font-size: 1rem;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid var(--border-color);
+      border-radius: 999px;
+      background: var(--primary-tint);
+      color: var(--primary);
+      padding: 5px 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      font-family: "Manrope", sans-serif;
+    }
+
+    .page-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--border-chip);
+      border-radius: 999px;
+      background: var(--bg-chip);
+      color: var(--text-chip);
+      font-size: 0.84rem;
+      font-weight: 700;
+      padding: 7px 12px;
+    }
+
+    .controls-panel {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 16px;
+      align-items: center;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      background: var(--bg-card);
+      padding: 14px;
+    }
+
+    .filter-controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .filter-label {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .filter-select {
+      padding: 10px 16px;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      background: var(--bg-body);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-main);
+      cursor: pointer;
+      min-width: 200px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .filter-select:hover {
+      border-color: var(--primary);
+    }
+
+    .filter-select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+
+    .stats-bar {
+      margin-bottom: 16px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+    }
+
+    .stat-item {
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      background: var(--bg-card);
+      padding: 16px;
+      min-height: 120px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 220ms ease, box-shadow 220ms ease;
+      display: grid;
+      align-content: start;
+      gap: 8px;
+    }
+
+    .stat-item::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 4px;
+      background: linear-gradient(90deg, #2563eb, #0ea5e9);
+    }
+
+    .stat-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 30px -24px rgba(37, 99, 235, 0.75);
+    }
+
+    .stat-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--primary-tint);
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stat-number {
+      font-family: "Sora", sans-serif;
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .applications-container {
+      margin: 0 auto;
+    }
+
+    .applications-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .application-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 24px;
+      transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      color: var(--text-main);
+    }
+
+    .application-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 3px;
+      background: linear-gradient(90deg, #2563eb, #0ea5e9);
+      opacity: 0.8;
+    }
+
+    .application-card:hover {
+      box-shadow: 0 22px 50px -32px rgba(37, 99, 235, 0.45);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .application-card.withdrawn {
+      opacity: 0.72;
+      background: var(--bg-body);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .job-info {
+      flex: 1;
+    }
+
+    .job-title {
+      font-family: "Sora", sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .company-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .company-name {
+      font-weight: 700;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .company-name i {
+      color: var(--js-primary);
+    }
+
+    .meta-info {
+      display: flex;
+      gap: 16px;
+      font-size: 13px;
+      color: var(--js-muted);
+    }
+
+    .meta-info span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 800;
+      padding: 4px 9px;
+      border: 1px solid transparent;
+      text-transform: capitalize;
+    }
+
+    .status-submitted {
+      background: var(--status-submitted-bg);
+      color: var(--status-submitted-text);
+      border-color: var(--status-submitted-text);
+    }
+
+    .status-reviewing {
+      background: var(--status-reviewing-bg);
+      color: var(--status-reviewing-text);
+      border-color: var(--status-reviewing-text);
+    }
+
+    .status-shortlisted {
+      background: var(--status-shortlisted-bg);
+      color: var(--status-shortlisted-text);
+      border-color: var(--status-shortlisted-text);
+    }
+
+    .status-interview {
+      background: var(--status-interview-bg);
+      color: var(--status-interview-text);
+      border-color: var(--status-interview-text);
+    }
+
+    .status-rejected {
+      background: var(--status-rejected-bg);
+      color: var(--status-rejected-text);
+      border-color: var(--status-rejected-text);
+    }
+
+    .status-viewed {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .status-offer {
+      background: #f3e8ff;
+      color: #7c3aed;
+    }
+
+    .status-hired {
+      background: #86efac;
+      color: #166534;
+    }
+
+    .status-rejected {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .status-withdrawn {
+      background: #f1f5f9;
+      color: #64748b;
+    }
+
+    .card-body {
+      border-top: 1px solid var(--js-border);
+      padding-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .ref-code {
+      font-family: "Manrope", monospace;
+      font-size: 12px;
+      color: var(--js-muted);
+      background: #f1f5f9;
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-bottom: 16px;
+      display: inline-block;
+    }
+
+    .timeline {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+
+    .timeline::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .timeline::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 2px;
+    }
+
+    .timeline::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 2px;
+    }
+
+    .timeline-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      background: #f8fafc;
+      border-radius: 8px;
+      font-size: 12px;
+      color: var(--js-muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .timeline-item i {
+      color: var(--js-primary);
+      font-size: 10px;
+    }
+
+    .timeline-item.current {
+      background: #dbeafe;
+      color: #1e40af;
+      font-weight: 700;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .applied-date {
+      font-size: 13px;
+      color: var(--js-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn-withdraw {
+      background: transparent;
+      border: 1px solid var(--js-danger);
+      color: var(--js-danger);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-withdraw:hover {
+      background: var(--js-danger);
+      color: white;
+    }
+
+    .empty-state {
+      background: var(--bg-card);
+      border: 1px dashed var(--border-color);
+      border-radius: 16px;
+      padding: 80px 40px;
+      text-align: center;
+    }
+
+    .empty-icon {
+      width: 80px;
+      height: 80px;
+      background: var(--primary-tint);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 32px;
+      color: var(--primary);
+    }
+
+    .empty-state h3 {
+      font-family: "Sora", sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .empty-state p {
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 4px;
+      background: #f1f5f9;
+      border-radius: 2px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--js-primary), var(--js-success));
+      border-radius: 2px;
+      transition: width 0.5s ease;
+    }
+
+    .progress-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--js-muted);
+      margin-bottom: 12px;
+    }
+
+    @media (max-width: 768px) {
+      .page-shell {
+        padding: 100px 16px 40px;
+      }
+
+      .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .page-actions {
+        width: 100%;
+      }
+
+      .page-actions .chip {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .controls-panel {
+        padding: 12px;
+      }
+
+      .filter-controls {
+        width: 100%;
+      }
+
+      .filter-select {
+        width: 100%;
+      }
+
+      .application-card {
+        padding: 20px;
+      }
+
+      .job-title {
+        font-size: 1.1rem;
+      }
+
+      .meta-info {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .card-footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .card-actions {
+        width: 100%;
+      }
+
+      .btn-withdraw {
+        width: 100%;
+        justify-content: center;
+      }
+
+      #nav-menu.active {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 66px;
+        left: 12px;
+        right: 12px;
+        border-radius: 16px;
+        border: 1px solid var(--border-color);
+        background: var(--bg-card);
+        backdrop-filter: blur(14px);
+        padding: 10px;
+        box-shadow: var(--shadow-lg);
+        z-index: 1000;
+        gap: 4px;
+      }
+
+      #nav-menu.active a {
+        width: 100%;
+        text-align: center;
+        padding: 12px;
+        border-radius: 10px;
+        font-weight: 500;
+      }
+
+      #nav-menu.active a:hover {
+        background: var(--primary-tint);
+        color: var(--primary);
+      }
+    }
+  </style>
+</head>
+
+<body class="jobseeker-applications-page">
+  <header id="header">
+    <div class="container">
+      <div class="header-content">
+        <a href="index.html" class="logo"><img src="LOGO-PunaIme.png" alt="logo"><span>WorkPulse</span></a>
+        <nav>
+          <ul id="nav-menu">
+            <li><a href="jobseeker-dashboard.html">Dashboard</a></li>
+            <li><a href="jobseeker-applications.html" class="active">Aplikimet e mia</a></li>
+            <li><a href="apply.html">Vendet e punës</a></li>
+          </ul>
+        </nav>
+        <div class="nav-buttons">
+          <div class="user-dropdown">
+            <button class="user-btn" id="userMenuBtn">
+              <span id="userDisplayName"></span>
+              <i class="fas fa-chevron-down" style="font-size: 0.8em; color: #64748b;"></i>
+            </button>
+            <div class="dropdown-content" id="userDropdown">
+              <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Dil</a>
+            </div>
+          </div>
+        </div>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Hap menunë">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="panel reveal">
+      <div class="page-header" style="margin-bottom: 0;">
+        <div class="page-title">
+          <span class="eyebrow"><i class="fa-solid fa-folder-open"></i> Application Hub</span>
+          <h1>Aplikimet e Mia</h1>
+          <p>Gjurmim i qartë i çdo aplikimi, me status të përditësuar dhe veprime të shpejta.</p>
+        </div>
+        <div class="page-actions">
+          <span class="chip"><i class="fa-solid fa-bolt"></i> Përditësime në kohë reale</span>
+          <span class="chip"><i class="fa-solid fa-shield-heart"></i> Kontroll i plotë mbi aplikimet</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="controls-panel reveal delay-1" style="margin-top: 14px;">
+      <div>
+        <div class="filter-label">Filtro sipas statusit</div>
+      </div>
+      <div class="filter-controls">
+        <select id="statusFilter" class="filter-select" aria-label="Filtro aplikimet sipas statusit">
+          <option value="">Të gjitha statuset</option>
+          <option value="submitted">Dërguar</option>
+          <option value="viewed">Parë</option>
+          <option value="shortlisted">Në listë të shkurtër</option>
+          <option value="interview">Intervistë</option>
+          <option value="offer">Ofertë</option>
+          <option value="rejected">Refuzuar</option>
+          <option value="hired">Punësuar</option>
+          <option value="withdrawn">Tërhequr</option>
+        </select>
+        <a href="apply.html" class="btn btn-outline"><i class="fa-solid fa-magnifying-glass"></i> Gjej vende punë</a>
+      </div>
+    </section>
+
+    <div class="stats-bar reveal delay-2" id="statsBar">
+      <div class="stat-item">
+        <div class="stat-icon"><i class="fa-solid fa-file-signature"></i></div>
+        <div class="stat-number" id="totalCount">-</div>
+        <div class="stat-label">Totali aplikimeve</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-icon"><i class="fa-regular fa-clock"></i></div>
+        <div class="stat-number" id="activeCount">-</div>
+        <div class="stat-label">Në proces</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+        <div class="stat-number" id="interviewCount">-</div>
+        <div class="stat-label">Intervista</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-icon"><i class="fa-solid fa-gift"></i></div>
+        <div class="stat-number" id="offerCount">-</div>
+        <div class="stat-label">Oferta</div>
+      </div>
+    </div>
+
+    <div class="applications-container reveal delay-3">
+      <div id="applicationsList">
+        <div class="applications-grid" id="applicationsGrid">
+          <div class="empty-state" id="loadingState">
+            <div class="empty-icon">
+              <i class="fas fa-spinner fa-spin"></i>
+            </div>
+            <h3>Duke ngarkuar aplikimet...</h3>
+            <p>Ju lutemi prisni ndërsa marrim të dhënat tuaja.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="script/config.js"></script>
+  <script src="script/shared/api.js"></script>
+  <script src="script/shared/auth.js"></script>
+  <script src="script/shared/toast.js"></script>
+  <script src="script/shared/theme-manager.js"></script>
+  <script src="script/jobseeker/applications.js"></script>
+</body>
+
+</html>

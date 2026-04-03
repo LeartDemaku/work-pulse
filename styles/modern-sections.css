@@ -1,0 +1,273 @@
+/* Modern Sections Redesign - 2026 Standard */
+
+/* Shared Animation Classes */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.animate-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Features Section (Pse të zgjidhni WorkPulse?) --- */
+.features {
+    background: var(--bg-body);
+    padding: 120px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Background blob decoration */
+.features::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.04) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    position: relative;
+    z-index: 1;
+}
+
+.feature-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    padding: 40px 32px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary);
+    background: var(--bg-card);
+}
+
+/* Gradient border effect on hover */
+.feature-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #2563EB, #7C3AED);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+}
+
+.feature-card:hover::after {
+    transform: scaleX(1);
+}
+
+.feature-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin-bottom: 24px;
+    transition: transform 0.4s ease;
+    background: var(--primary-tint);
+    color: var(--primary);
+    box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.15);
+    border: none;
+}
+
+/* Unique colors for each icon interaction */
+.feature-card:nth-child(2) .feature-icon {
+    background: rgba(124, 58, 237, 0.1);
+    color: #7C3AED;
+    box-shadow: 0 10px 20px -5px rgba(124, 58, 237, 0.15);
+}
+
+.feature-card:nth-child(3) .feature-icon {
+    background: var(--success-tint);
+    color: var(--success);
+    box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.15);
+}
+
+.feature-card:nth-child(4) .feature-icon {
+    background: var(--warning-tint);
+    color: var(--warning);
+    box-shadow: 0 10px 20px -5px rgba(249, 115, 22, 0.15);
+}
+
+.feature-card:hover .feature-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.feature-card h3 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--text-main);
+}
+
+.feature-card p {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+
+/* --- How It Works Section (Si funksionon WorkPulse?) --- */
+.how-it-works {
+    padding: 120px 0;
+    background: var(--bg-body);
+    position: relative;
+    overflow: hidden;
+}
+
+.steps-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    position: relative;
+    margin-top: 60px;
+}
+
+/* Connecting Line */
+.steps-container::before {
+    content: '';
+    position: absolute;
+    top: 40px;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--border-color) 0%, var(--primary) 50%, var(--border-color) 100%);
+    background-size: 200% auto;
+    z-index: 0;
+    animation: gradientFlow 3s linear infinite;
+}
+
+.step {
+    position: relative;
+    background: var(--bg-card);
+    padding: 32px 24px;
+    border-radius: 20px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    transition: all 0.4s ease;
+    z-index: 1;
+    box-shadow: none;
+}
+
+.step:hover {
+    transform: translateY(-8px);
+}
+
+.step-number {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #2563EB 0%, #4F46E5 100%);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.5rem;
+    margin: 0 auto 32px;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 0 0 8px var(--bg-card), 0 10px 25px -5px rgba(37, 99, 235, 0.4);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.step:hover .step-number {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 8px var(--bg-card), 0 15px 35px -8px rgba(37, 99, 235, 0.5);
+}
+
+.step-content h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 12px;
+}
+
+.step-content p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+
+    .features-grid,
+    .steps-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+
+    .steps-container::before {
+        display: none;
+        /* Hide horizontal line on tablet/mobile */
+    }
+}
+
+@media (max-width: 640px) {
+
+    .features-grid,
+    .steps-container {
+        grid-template-columns: 1fr;
+    }
+
+    .feature-card {
+        padding: 32px 24px;
+    }
+
+    .section-title h2 {
+        font-size: 2rem;
+    }
+
+    .step {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        text-align: left;
+        gap: 20px;
+        padding: 20px;
+        border: 1px solid #E2E8F0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    }
+
+    .step-number {
+        margin: 0;
+        width: 48px;
+        height: 48px;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+        box-shadow: none;
+    }
+
+    .step:hover .step-number {
+        transform: scale(1);
+    }
+}

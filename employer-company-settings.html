@@ -1,0 +1,617 @@
+﻿<!DOCTYPE html>
+<html lang="sq">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cilësimet e Kompanisë - Platforma</title>
+  <link rel="stylesheet" href="styles/theme.css">
+  <link rel="stylesheet" href="styles/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Manrope:wght@500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="icon" href="LOGO-PunaIme.png">
+
+  <style>
+    :root {
+      --set-ink: var(--text-main);
+      --set-muted: var(--text-muted);
+      --set-border: var(--border-color);
+      --set-accent: var(--primary);
+      --set-accent-soft: var(--primary-tint);
+      --set-shadow: var(--shadow-md);
+      /* Dashboard UI Aliases */
+      --dash-ink: var(--set-ink);
+      --dash-accent: var(--set-accent);
+    }
+
+    body.employer-settings-page {
+      background: var(--bg-body);
+      color: var(--text-main);
+      min-height: 100vh;
+    }
+
+    .page-shell {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 116px 20px 56px;
+    }
+
+    .reveal {
+      animation: rise-in 500ms ease both;
+    }
+
+    .reveal-delay-1 {
+      animation-delay: 80ms;
+    }
+
+    .reveal-delay-2 {
+      animation-delay: 140ms;
+    }
+
+    @keyframes rise-in {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* User Dropdown Styles */
+    .user-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .user-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-family: inherit;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s;
+    }
+
+    .user-btn:hover {
+      background: var(--bg-body);
+      border-color: var(--primary);
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 100%;
+      margin-top: 8px;
+      background-color: var(--bg-card);
+      min-width: 150px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 6px;
+      z-index: 50;
+    }
+
+    .dropdown-content.show {
+      display: block;
+      animation: dropdownFadeIn 0.15s ease-out;
+    }
+
+    .dropdown-content a {
+      color: var(--text-main);
+      padding: 10px 14px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      transition: background 0.15s;
+    }
+
+    .dropdown-content a:hover {
+      background-color: var(--primary-tint);
+      color: var(--primary);
+    }
+
+    @keyframes dropdownFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 21px;
+      font-weight: 800;
+      color: var(--text-main);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    .logo img {
+      height: 60px;
+      width: auto;
+      filter: drop-shadow(0 4px 6px rgba(37, 99, 235, 0.15));
+      transition: transform 0.3s ease;
+    }
+
+    .logo span {
+      background: linear-gradient(135deg, var(--text-main) 20%, var(--primary) 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      box-shadow: var(--shadow-md);
+      padding: 22px;
+      color: var(--text-main);
+    }
+
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      gap: 22px;
+      align-items: flex-start;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -60px;
+      top: -52px;
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, rgba(37, 99, 235, 0.16), transparent 65%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: "Sora", sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--primary);
+      background: var(--primary-tint);
+      border: 1px solid var(--border-color);
+      border-radius: 999px;
+      padding: 5px 10px;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .hero h1 {
+      font-family: "Sora", sans-serif;
+      font-size: clamp(1.7rem, 3vw, 2.2rem);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .hero-subtitle {
+      color: var(--text-muted);
+      max-width: 680px;
+      font-size: 1.02rem;
+    }
+
+    .hero-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      border: 1px solid var(--border-chip);
+      border-radius: 999px;
+      background: var(--bg-chip);
+      color: var(--text-chip);
+      padding: 7px 12px;
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 245px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-lg {
+      min-height: 46px;
+      font-weight: 700;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.25fr;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .section-head {
+      margin-bottom: 14px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .section-head h2 {
+      font-family: "Sora", sans-serif;
+      font-size: 1.14rem;
+      letter-spacing: -0.015em;
+    }
+
+    .section-head p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .verify-card {
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      background: var(--bg-body);
+      padding: 16px;
+      margin-bottom: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .verify-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 4px;
+      background: linear-gradient(90deg, #2563eb, #10b981);
+    }
+
+    .verify-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      padding: 7px 12px;
+      font-size: 0.83rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .verify-badge.verified {
+      background: var(--status-shortlisted-bg);
+      color: var(--status-shortlisted-text);
+      border-color: var(--status-shortlisted-text);
+    }
+
+    .verify-badge.pending {
+      background: var(--status-rejected-bg);
+      color: var(--status-rejected-text);
+      border-color: var(--status-rejected-text);
+    }
+
+    .verify-note {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .quick-list {
+      margin: 0;
+      padding-left: 16px;
+      color: var(--text-muted);
+      display: grid;
+      gap: 6px;
+      font-size: 0.88rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .form-group {
+      display: grid;
+      gap: 6px;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-group label {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      font-family: "Manrope", sans-serif;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      background: var(--bg-body);
+      transition: border-color 160ms ease, box-shadow 160ms ease;
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    .hint {
+      font-size: 0.82rem;
+      color: var(--set-muted);
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 1020px) {
+      .hero {
+        flex-direction: column;
+      }
+
+      .hero-cta {
+        width: 100%;
+        min-width: 0;
+        flex-direction: row;
+      }
+
+      .hero-cta .btn {
+        flex: 1;
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-cta {
+        flex-direction: column;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-actions .btn {
+        width: 100%;
+      }
+
+      #nav-menu.active {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 66px;
+        left: 12px;
+        right: 12px;
+        border-radius: 16px;
+        border: 1px solid var(--border-color);
+        background: var(--bg-card);
+        backdrop-filter: blur(14px);
+        padding: 10px;
+        box-shadow: var(--shadow-lg);
+        z-index: 1000;
+        gap: 4px;
+      }
+
+      #nav-menu.active a {
+        width: 100%;
+        text-align: center;
+        padding: 12px;
+        border-radius: 10px;
+        font-weight: 500;
+      }
+
+      #nav-menu.active a:hover {
+        background: var(--primary-tint);
+        color: var(--primary);
+      }
+    }
+  </style>
+</head>
+
+<body class="employer-settings-page">
+  <header id="header">
+    <div class="container">
+      <div class="header-content">
+        <a href="index.html" class="logo"><img src="LOGO-PunaIme.png" alt="logo"><span>WorkPulse</span></a>
+        <nav>
+          <ul id="nav-menu">
+            <li><a href="employer-dashboard.html">Dashboard</a></li>
+            <li><a href="employer-jobs.html">Shpalljet</a></li>
+            <li><a href="employer-applications.html">Aplikimet</a></li>
+            <li><a href="employer-company-settings.html" class="active">Kompania</a></li>
+          </ul>
+        </nav>
+        <div class="nav-buttons">
+          <a href="employer-dashboard.html" class="btn btn-outline"
+            style="margin-right: 12px; border-radius: 8px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; padding: 8px 16px; border: 1px solid #4c4c4c; color: #135ee9; transition: all 0.2s;">Paneli</a>
+          <div class="user-dropdown">
+            <button class="user-btn" id="userMenuBtn">
+              <span id="userDisplayName"></span>
+              <i class="fas fa-chevron-down" style="font-size: 0.8em; color: #64748b;"></i>
+            </button>
+            <div class="dropdown-content" id="userDropdown">
+              <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Dil</a>
+            </div>
+          </div>
+        </div>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Hap menunë">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="panel hero reveal">
+      <div>
+        <span class="eyebrow"><i class="fa-solid fa-building"></i> Company Control</span>
+        <h1>Cilësime të avancuara për kompaninë.</h1>
+        <p class="hero-subtitle">Përditëso të dhënat zyrtare, menaxho email-et e njoftimeve dhe monitoro statusin e
+          verifikimit nga një vend i vetëm.</p>
+        <div class="hero-chips">
+          <span class="chip"><i class="fa-solid fa-shield-check"></i> Profil i besueshëm</span>
+          <span class="chip"><i class="fa-solid fa-envelope"></i> Njoftime të sakta</span>
+          <span class="chip"><i class="fa-solid fa-gear"></i> Menaxhim i centralizuar</span>
+        </div>
+      </div>
+      <div class="hero-cta">
+        <button class="btn btn-primary btn-lg" style="background-color: #304cda; color: white; border-radius: 15px;"
+          type="button" id="focusProfileBtn"><i class="fa-solid fa-pen-to-square"></i> Përditëso profilin</button>
+        <button class="btn btn-outline btn-lg" type="button" id="resendVerificationBtn"><i
+            class="fa-solid fa-paper-plane"></i> Ridërgo verifikimin</button>
+      </div>
+    </section>
+
+    <section class="content-grid reveal reveal-delay-1">
+      <article class="panel">
+        <div class="section-head">
+          <h2>Verifikimi i email-it</h2>
+          <p>Statusi i besueshmërisë së kompanisë</p>
+        </div>
+
+        <div class="verify-card">
+          <div id="verificationBadge" class="verify-badge pending"><i class="fa-regular fa-circle"></i> Duke u
+            kontrolluar...</div>
+          <p class="verify-note">Verifikimi bëhet vetëm përmes linkut të dërguar në email-in e kompanisë.</p>
+          <ul class="quick-list">
+            <li>Pas klikimit të linkut, statusi përditësohet automatikisht.</li>
+            <li>Kontrolloni folder-in Spam nëse email-i nuk duket në Inbox.</li>
+            <li>Përdorni një email aktiv për të marrë njoftime për aplikime.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article id="companyProfilePanel" class="panel reveal reveal-delay-2">
+        <div class="section-head">
+          <h2>Të dhënat e kompanisë</h2>
+          <p>Ruaj profilin publik dhe kontaktet zyrtare</p>
+        </div>
+
+        <form id="companyForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="companyName">Emri i kompanisë</label>
+              <input id="companyName" placeholder="p.sh. Demaku Corp." required>
+            </div>
+
+            <div class="form-group">
+              <label for="companyLegalName">Emri ligjor</label>
+              <input id="companyLegalName" placeholder="Emri i regjistruar zyrtarisht">
+            </div>
+
+            <div class="form-group">
+              <label for="companyEmail">Email-i zyrtar</label>
+              <input id="companyEmail" type="email" placeholder="company@email.com" required>
+            </div>
+
+            <div class="form-group">
+              <label for="companyPhone">Telefoni</label>
+              <input id="companyPhone" placeholder="+383 ...">
+            </div>
+
+            <div class="form-group">
+              <label for="companyCity">Qyteti</label>
+              <input id="companyCity" placeholder="Prishtinë">
+            </div>
+
+            <div class="form-group">
+              <label for="companyWebsite">Website</label>
+              <input id="companyWebsite" placeholder="https://...">
+            </div>
+
+            <div class="form-group full">
+              <label for="notificationEmail">Email-i për njoftime</label>
+              <input id="notificationEmail" type="email" placeholder="alerts@company.com">
+              <p class="hint">Ky email merr njoftime kur kandidatët aplikojnë për shpalljet tuaja.</p>
+            </div>
+
+            <div class="form-group full">
+              <label for="companyDescription">Përshkrimi i kompanisë</label>
+              <textarea id="companyDescription"
+                placeholder="Shkruani një përshkrim të shkurtër për kompaninë"></textarea>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit"><i class="fa-solid fa-floppy-disk"></i> Ruaj
+              ndryshimet</button>
+            <button class="btn btn-outline" type="button" id="resetCompanyFormBtn"><i
+                class="fa-solid fa-rotate-left"></i> Rikthe të dhënat</button>
+          </div>
+        </form>
+      </article>
+    </section>
+  </main>
+
+  <script src="script/config.js"></script>
+  <script src="script/shared/api.js"></script>
+  <script src="script/shared/auth.js"></script>
+  <script src="script/shared/toast.js"></script>
+  <script src="script/shared/theme-manager.js"></script>
+  <script src="script/employer/company-settings.js"></script>
+</body>
+
+</html>

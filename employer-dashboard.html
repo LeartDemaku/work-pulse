@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="sq">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employer Dashboard - Platforma</title>
+  <link rel="stylesheet" href="styles/theme.css">
+  <link rel="stylesheet" href="styles/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="LOGO-PunaIme.png">
+
+  <style>
+    :root {
+      --dash-ink: var(--text-main);
+      --dash-muted: var(--text-muted);
+      --dash-border: var(--border-color);
+      --dash-card: var(--bg-card);
+      --dash-accent: var(--primary);
+      --dash-accent-soft: var(--primary-tint);
+      --dash-shadow: var(--shadow-md);
+    }
+
+    body.employer-dashboard-page {
+      background: var(--bg-body);
+      color: var(--text-main);
+      min-height: 100vh;
+    }
+
+    .page-shell {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 116px 20px 56px;
+    }
+
+    .reveal {
+      animation: rise-in 500ms ease both;
+    }
+
+    .reveal-delay-1 {
+      animation-delay: 80ms;
+    }
+
+    .reveal-delay-2 {
+      animation-delay: 140ms;
+    }
+
+    .reveal-delay-3 {
+      animation-delay: 200ms;
+    }
+
+    @keyframes rise-in {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* User Dropdown Styles */
+    .user-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .user-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-family: inherit;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s;
+    }
+
+    .user-btn:hover {
+      background: var(--bg-body);
+      border-color: var(--primary);
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 100%;
+      margin-top: 8px;
+      background-color: var(--bg-card);
+      min-width: 150px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 6px;
+      z-index: 50;
+    }
+
+    .dropdown-content.show {
+      display: block;
+      animation: dropdownFadeIn 0.15s ease-out;
+    }
+
+    .dropdown-content a {
+      color: var(--text-main);
+      padding: 10px 14px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      transition: background 0.15s;
+    }
+
+    .dropdown-content a:hover {
+      background-color: var(--primary-tint);
+      color: var(--primary);
+    }
+
+    @keyframes dropdownFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 21px;
+      font-weight: 800;
+      color: var(--text-main);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    .logo img {
+      height: 60px;
+      width: auto;
+      filter: drop-shadow(0 4px 6px rgba(37, 99, 235, 0.15));
+      transition: transform 0.3s ease;
+    }
+
+    .logo span {
+      background: linear-gradient(135deg, var(--text-main) 20%, var(--primary) 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      box-shadow: var(--shadow-md);
+      padding: 24px;
+      color: var(--text-main);
+    }
+
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: flex-start;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -60px;
+      top: -52px;
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, rgba(37, 99, 235, 0.16), transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero h1 {
+      font-family: "Sora", sans-serif;
+      font-size: clamp(1.7rem, 3vw, 2.3rem);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .hero-subtitle {
+      color: var(--text-muted);
+      max-width: 680px;
+      font-size: 1.02rem;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-family: "Sora", sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--primary);
+      background: var(--primary-tint);
+      border: 1px solid var(--border-color);
+      border-radius: 999px;
+      padding: 5px 10px;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .hero-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      border: 1px solid var(--border-chip);
+      border-radius: 999px;
+      background: var(--bg-chip);
+      color: var(--text-chip);
+      padding: 7px 12px;
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 240px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-lg {
+      min-height: 46px;
+      font-weight: 700;
+    }
+
+    .section-head {
+      margin-bottom: 14px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .section-head h2 {
+      font-family: "Sora", sans-serif;
+      font-size: 1.16rem;
+      letter-spacing: -0.015em;
+    }
+
+    .section-head p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .metric-card {
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      background: var(--bg-card);
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+      min-height: 142px;
+      transition: transform 220ms ease, box-shadow 220ms ease;
+    }
+
+    .metric-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #2563eb, #10b981);
+    }
+
+    .metric-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 28px -24px rgba(37, 99, 235, 0.7);
+    }
+
+    .metric-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: var(--primary-tint);
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      margin-bottom: 12px;
+    }
+
+    .metric-value {
+      font-family: "Sora", sans-serif;
+      font-size: clamp(1.6rem, 3vw, 2rem);
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .metric-label {
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .metric-note {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .actions-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .action-card {
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      background: var(--bg-body);
+      padding: 16px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+    }
+
+    .action-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--primary);
+      box-shadow: 0 16px 30px -25px rgba(37, 99, 235, 0.65);
+    }
+
+    .action-card i {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--primary-tint);
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 9px;
+    }
+
+    .action-card h3 {
+      font-family: "Sora", sans-serif;
+      font-size: 1rem;
+      margin-bottom: 2px;
+    }
+
+    .action-card p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .jobs-wrap {
+      display: grid;
+      gap: 10px;
+    }
+
+    .job-item {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 14px 16px;
+      background: var(--bg-body);
+      transition: border-color 220ms ease, transform 220ms ease;
+    }
+
+    .job-item:hover {
+      border-color: #9dbcf6;
+      transform: translateY(-1px);
+    }
+
+    .job-title {
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .job-meta {
+      font-size: 0.87rem;
+      color: var(--dash-muted);
+    }
+
+    .deadline-badge {
+      border-radius: 999px;
+      padding: 6px 11px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      white-space: nowrap;
+      border: 1px solid transparent;
+    }
+
+    .deadline-badge.safe {
+      background: var(--success-tint);
+      color: var(--success);
+      border-color: var(--success);
+    }
+
+    .deadline-badge.warn {
+      background: var(--warning-tint);
+      color: var(--warning);
+      border-color: var(--warning);
+    }
+
+    .deadline-badge.danger {
+      background: var(--error-tint);
+      color: var(--error);
+      border-color: var(--error);
+    }
+
+    .empty-state {
+      border: 1px dashed var(--border-color);
+      border-radius: 14px;
+      background: var(--bg-body);
+      padding: 22px;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .empty-state i {
+      width: 48px;
+      height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: var(--primary-tint);
+      color: var(--primary);
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+
+    .empty-state h3 {
+      font-family: "Sora", sans-serif;
+      color: var(--dash-ink);
+      margin-bottom: 4px;
+      font-size: 1.05rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero {
+        flex-direction: column;
+      }
+
+      .hero-cta {
+        min-width: 0;
+        width: 100%;
+        flex-direction: row;
+      }
+
+      .hero-cta .btn {
+        flex: 1;
+      }
+
+      .metrics-grid,
+      .actions-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+
+      .metrics-grid,
+      .actions-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-cta {
+        flex-direction: column;
+      }
+
+      #nav-menu.active {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 66px;
+        left: 12px;
+        right: 12px;
+        border-radius: 16px;
+        border: 1px solid var(--border-color);
+        background: var(--bg-card);
+        backdrop-filter: blur(14px);
+        padding: 10px;
+        box-shadow: var(--shadow-lg);
+        z-index: 1000;
+        gap: 4px;
+      }
+
+      #nav-menu.active a {
+        width: 100%;
+        text-align: center;
+        padding: 12px;
+        border-radius: 10px;
+        font-weight: 500;
+      }
+
+      #nav-menu.active a:hover {
+        background: var(--primary-tint);
+        color: var(--primary);
+      }
+    }
+  </style>
+</head>
+
+<body class="employer-dashboard-page">
+  <header id="header">
+    <div class="container">
+      <div class="header-content">
+        <a href="index.html" class="logo"><img src="LOGO-PunaIme.png" alt="logo"><span>WorkPulse</span></a>
+        <nav>
+          <ul id="nav-menu">
+            <li><a href="employer-dashboard.html" class="active">Dashboard</a></li>
+            <li><a href="employer-jobs.html">Shpalljet</a></li>
+            <li><a href="employer-applications.html">Aplikimet</a></li>
+            <li><a href="employer-company-settings.html">Kompania</a></li>
+          </ul>
+        </nav>
+        <div class="nav-buttons">
+          <div class="user-dropdown">
+            <button class="user-btn" id="userMenuBtn">
+              <span id="userDisplayName"></span>
+              <i class="fas fa-chevron-down" style="font-size: 0.8em; color: #64748b;"></i>
+            </button>
+            <div class="dropdown-content" id="userDropdown">
+              <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Dil</a>
+            </div>
+          </div>
+        </div>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Hap menunë">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="panel hero reveal">
+      <div>
+        <span class="eyebrow">Employer Workspace</span>
+        <h1 id="welcomeHeading">Menaxho rekrutimin në mënyrë moderne.</h1>
+        <p class="hero-subtitle">
+          Ke një panel të unifikuar për shpallje, aplikime dhe të dhënat e kompanisë, me hapat më të rëndësishëm vetëm
+          një klik larg.
+        </p>
+        <div class="hero-chips">
+          <span class="chip"><i class="fa-solid fa-bolt"></i> Veprime të shpejta</span>
+          <span class="chip"><i class="fa-solid fa-chart-line"></i> Pamje e qartë e metrikave</span>
+          <span class="chip"><i class="fa-regular fa-clock"></i> Fokus tek afatet</span>
+        </div>
+      </div>
+      <div class="hero-cta">
+        <a class="btn btn-primary btn-lg" style="background-color: #304cda; color: white; border-radius: 15px;"
+          href="employer-jobs.html"><i class="fa-solid fa-plus"></i> Krijo shpallje</a>
+        <a class="btn btn-outline btn-lg" href="employer-applications.html"><i class="fa-solid fa-users"></i> Shiko
+          aplikimet</a>
+      </div>
+    </section>
+
+    <section class="reveal reveal-delay-1" style="margin-top: 18px;">
+      <div class="section-head">
+        <h2>Performanca e fundit</h2>
+        <p>Përditësuar në kohë reale</p>
+      </div>
+      <div id="metrics" class="metrics-grid" aria-live="polite">
+        <article class="metric-card">
+          <div class="metric-icon"><i class="fa-solid fa-briefcase"></i></div>
+          <div class="metric-value">...</div>
+          <div class="metric-label">Duke ngarkuar</div>
+          <div class="metric-note">Metrikat po merren nga serveri.</div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-icon"><i class="fa-solid fa-file-signature"></i></div>
+          <div class="metric-value">...</div>
+          <div class="metric-label">Duke ngarkuar</div>
+          <div class="metric-note">Metrikat po merren nga serveri.</div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-icon"><i class="fa-regular fa-hourglass-half"></i></div>
+          <div class="metric-value">...</div>
+          <div class="metric-label">Duke ngarkuar</div>
+          <div class="metric-note">Metrikat po merren nga serveri.</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel reveal reveal-delay-2" style="margin-top: 16px;">
+      <div class="section-head">
+        <h2>Veprime të shpejta</h2>
+        <p>Hyr direkt në seksionin që të duhet</p>
+      </div>
+      <div class="actions-grid">
+        <a class="action-card" href="employer-jobs.html">
+          <i class="fa-solid fa-plus"></i>
+          <h3>Posto një punë</h3>
+          <p>Krijo ose përditëso shpalljet aktive.</p>
+        </a>
+        <a class="action-card" href="employer-applications.html">
+          <i class="fa-solid fa-user-check"></i>
+          <h3>Rishiko kandidatët</h3>
+          <p>Filtro aplikimet dhe vendos statuset.</p>
+        </a>
+        <a class="action-card" href="employer-company-settings.html">
+          <i class="fa-solid fa-building"></i>
+          <h3>Profili i kompanisë</h3>
+          <p>Ruaj email-et dhe detajet e njoftimeve.</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="panel reveal reveal-delay-3" style="margin-top: 16px;">
+      <div class="section-head">
+        <h2>Shpallje që skadojnë shpejt</h2>
+        <p>Afatet e 7 ditëve të ardhshme</p>
+      </div>
+      <div id="expiringJobs" class="jobs-wrap"></div>
+    </section>
+  </main>
+
+  <script src="script/config.js"></script>
+  <script src="script/shared/api.js"></script>
+  <script src="script/shared/auth.js"></script>
+  <script src="script/shared/toast.js"></script>
+  <script src="script/shared/theme-manager.js"></script>
+  <script src="script/employer/dashboard.js"></script>
+</body>
+
+</html>

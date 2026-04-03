@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="sq">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regjistrohu / Kyçu - WorkPulse</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles/theme.css">
+    <link rel="stylesheet" href="styles/signin.css">
+    <link rel="icon" href="LOGO-PunaIme.png">
+</head>
+
+<body>
+    <header id="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <img src="LOGO-PunaIme.png" alt="WorkPulse Logo" />
+                    <span>WorkPulse</span>
+                </a>
+
+                <nav>
+                    <ul id="nav-menu">
+                        <li><a href="index.html#home">Kryefaqja</a></li>
+                        <li><a href="index.html#features">Përse Ne?</a></li>
+                        <li><a href="index.html#how-it-works">Si Funksionon</a></li>
+                        <li><a href="index.html#contact">Kontakt</a></li>
+                    </ul>
+                </nav>
+
+                <div class="nav-buttons">
+                    <a href="signin.html" class="btn btn-outline">Identifikim</a>
+                    <a href="apply.html" class="btn btn-primary">Vende punë</a>
+                </div>
+
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="login-hero">
+        <div class="container">
+            <div class="login-hero-content">
+                <h1>Kyçu ose krijo llogari</h1>
+                <p>Menaxho aplikimet e tua, përditëso profilin dhe ndiq statusin e përgjigjeve nga kompanitë.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="login-section">
+        <div class="container">
+            <div class="login-card">
+                <div class="tab-switcher">
+                    <button class="tab-toggle" data-tab="signup">Krijo llogari</button>
+                    <button class="tab-toggle active" data-tab="login">Kyçu</button>
+                </div>
+
+                <div id="loginMessage" class="login-message"></div>
+
+                <div id="loginPane">
+                    <h2>Hyrja në llogari</h2>
+                    <p class="subtitle">Shkruani email-in dhe fjalëkalimin që keni përdorur gjatë regjistrimit.</p>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="loginEmail">Email *</label>
+                            <input type="email" id="loginEmail" name="loginEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Fjalëkalimi *</label>
+                            <input type="password" id="loginPassword" name="loginPassword" required>
+                        </div>
+                        <div class="login-meta">
+                            <label class="checkbox">
+                                <input type="checkbox" id="rememberMe" name="rememberMe">
+                                Më mbaj mend
+                            </label>
+                            <a href="#" id="forgotPasswordLink">Keni harruar fjalëkalimin?</a>
+                        </div>
+                        <div class="login-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-sign-in-alt"></i>
+                                Kyçu
+                            </button>
+                            <div class="oauth-separator"><span>ose</span></div>
+                            <div id="googleLoginBlock" class="oauth-block">
+                                <button id="googleLoginBrandBtn" class="google-brand-btn" type="button">
+                                    <span class="google-brand-icon" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" focusable="false">
+                                            <path fill="#EA4335"
+                                                d="M12 10.2v3.9h5.5c-.2 1.3-1.5 3.8-5.5 3.8-3.3 0-6-2.7-6-6.1s2.7-6.1 6-6.1c1.9 0 3.2.8 3.9 1.5l2.7-2.6C17 3.1 14.8 2 12 2 6.5 2 2 6.6 2 12.1S6.5 22.2 12 22.2c6.9 0 9.6-4.8 9.6-7.3 0-.5 0-.9-.1-1.3H12z" />
+                                            <path fill="#4285F4"
+                                                d="M22 12.1c0-.8-.1-1.4-.2-2H12v3.9h5.5c-.2 1.3-1.5 3.8-5.5 3.8v4.3h0c5.6 0 10-4.6 10-10z" />
+                                            <path fill="#FBBC05"
+                                                d="M6 14.2c-.2-.6-.3-1.3-.3-2s.1-1.4.3-2V5.9H6C4.8 7.7 4 9.8 4 12.1c0 2.3.8 4.4 2 6.2l2-4.1z" />
+                                            <path fill="#34A853"
+                                                d="M12 22.2c2.8 0 5.1-.9 6.8-2.5l-3.2-2.6c-.9.6-2.1 1.1-3.6 1.1-2.7 0-5-1.8-5.8-4.3l-3.2 2.5C4.7 20 8 22.2 12 22.2z" />
+                                        </svg>
+                                    </span>
+                                    <span>Vazhdo me Google</span>
+                                </button>
+                                <div id="googleLoginButton" class="google-btn-wrap" aria-hidden="true"></div>
+                                <p class="oauth-note">Hyr me Gmail për qasje të shpejtë.</p>
+                            </div>
+                            <p class="login-helper">
+                                Nuk keni llogari? <a href="#" id="goToSignupInline">Krijo llogari</a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="signupPane" style="display:none;">
+                    <h2>Krijoni llogarinë tuaj</h2>
+                    <p class="subtitle">Regjistrohuni për të ruajtur profilin dhe për të ndjekur aplikimet.</p>
+                    <form id="signupForm">
+                        <div class="form-group">
+                            <label class="role-label">Roli i llogarisë *</label>
+                            <div class="role-selector">
+                                <label class="role-card active" data-role="job_seeker">
+                                    <input type="radio" name="signupRole" value="job_seeker" checked>
+                                    <div class="role-icon">
+                                        <i class="fas fa-user-tie"></i>
+                                    </div>
+                                    <div class="role-content">
+                                        <span class="role-title">Po kërkoj punë</span>
+                                        <span class="role-description">Jam duke kërkuar një vend punë</span>
+                                    </div>
+                                    <div class="role-check">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                </label>
+                                <label class="role-card" data-role="employer">
+                                    <input type="radio" name="signupRole" value="employer">
+                                    <div class="role-icon employer">
+                                        <i class="fas fa-building"></i>
+                                    </div>
+                                    <div class="role-content">
+                                        <span class="role-title">Po punësoj</span>
+                                        <span class="role-description">Jam duke kërkuar kandidatë</span>
+                                    </div>
+                                    <div class="role-check">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-row-dual">
+                            <div class="form-group">
+                                <label for="signupName">Emri dhe Mbiemri *</label>
+                                <input type="text" id="signupName" name="signupName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="signupPhone">Numri i telefonit *</label>
+                                <input type="text" id="signupPhone" name="signupPhone" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="signupEmail">Email *</label>
+                            <input type="email" id="signupEmail" name="signupEmail" required>
+                        </div>
+                        <div class="form-row-dual">
+                            <div class="form-group">
+                                <label for="signupPassword">Fjalëkalimi *</label>
+                                <input type="password" id="signupPassword" name="signupPassword" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="signupPasswordConfirm">Përsërit fjalëkalimin *</label>
+                                <input type="password" id="signupPasswordConfirm" name="signupPasswordConfirm" required>
+                            </div>
+                        </div>
+
+                        <div id="employerFields" style="display:none;">
+                            <div class="form-group">
+                                <label for="signupCompanyName">Emri i kompanisë *</label>
+                                <input type="text" id="signupCompanyName" name="signupCompanyName">
+                            </div>
+                            <div class="form-group">
+                                <label for="signupCompanyEmail">Email i kompanisë *</label>
+                                <input type="email" id="signupCompanyEmail" name="signupCompanyEmail">
+                            </div>
+                            <div class="form-group">
+                                <label for="signupBusinessNumber">Numri i biznesit (opsional)</label>
+                                <input type="text" id="signupBusinessNumber" name="signupBusinessNumber">
+                            </div>
+                            <div class="form-group">
+                                <label for="signupCompanyWebsite">Website (opsional)</label>
+                                <input type="text" id="signupCompanyWebsite" name="signupCompanyWebsite">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="checkbox">
+                                <input type="checkbox" id="signupPrivacy" required>
+                                Pajtohem me kushtet dhe politikën e privatësisë.
+                            </label>
+                        </div>
+                        <div class="login-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-user-plus"></i>
+                                Regjistrohu
+                            </button>
+                            <div class="oauth-separator"><span>ose</span></div>
+                            <div id="googleSignupBlock" class="oauth-block">
+                                <button id="googleSignupBrandBtn" class="google-brand-btn" type="button">
+                                    <span class="google-brand-icon" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" focusable="false">
+                                            <path fill="#EA4335"
+                                                d="M12 10.2v3.9h5.5c-.2 1.3-1.5 3.8-5.5 3.8-3.3 0-6-2.7-6-6.1s2.7-6.1 6-6.1c1.9 0 3.2.8 3.9 1.5l2.7-2.6C17 3.1 14.8 2 12 2 6.5 2 2 6.6 2 12.1S6.5 22.2 12 22.2c6.9 0 9.6-4.8 9.6-7.3 0-.5 0-.9-.1-1.3H12z" />
+                                            <path fill="#4285F4"
+                                                d="M22 12.1c0-.8-.1-1.4-.2-2H12v3.9h5.5c-.2 1.3-1.5 3.8-5.5 3.8v4.3h0c5.6 0 10-4.6 10-10z" />
+                                            <path fill="#FBBC05"
+                                                d="M6 14.2c-.2-.6-.3-1.3-.3-2s.1-1.4.3-2V5.9H6C4.8 7.7 4 9.8 4 12.1c0 2.3.8 4.4 2 6.2l2-4.1z" />
+                                            <path fill="#34A853"
+                                                d="M12 22.2c2.8 0 5.1-.9 6.8-2.5l-3.2-2.6c-.9.6-2.1 1.1-3.6 1.1-2.7 0-5-1.8-5.8-4.3l-3.2 2.5C4.7 20 8 22.2 12 22.2z" />
+                                        </svg>
+                                    </span>
+                                    <span>Vazhdo me Google</span>
+                                </button>
+                                <div id="googleSignupButton" class="google-btn-wrap" aria-hidden="true"></div>
+                                <p class="oauth-note">Google funksionon për kandidatët dhe employer-at e rinj (me të
+                                    dhënat e kompanisë të plotësuara).</p>
+                            </div>
+                            <p class="login-helper">
+                                Keni tashmë llogari? <a href="#" id="goToLoginInline">Kyçu</a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <div id="forgotPasswordModal" class="auth-modal" aria-hidden="true">
+        <div class="auth-modal-backdrop" data-close="forgot-modal"></div>
+        <div class="auth-modal-card" role="dialog" aria-modal="true" aria-labelledby="forgotModalTitle">
+            <button type="button" class="auth-modal-close" id="forgotPasswordCloseBtn" aria-label="Mbyll dritaren">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3 id="forgotModalTitle">Rivendos fjalëkalimin</h3>
+            <p class="auth-modal-subtitle">Shkruani email-in tuaj dhe do të merrni një link për të vendosur fjalëkalim
+                të ri.</p>
+            <form id="forgotPasswordForm" class="auth-modal-form">
+                <label for="forgotPasswordEmail">Email-i</label>
+                <input type="email" id="forgotPasswordEmail" required placeholder="shembull@email.com">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-paper-plane"></i>
+                    Dërgo linkun
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <footer id="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Rreth nesh</h3>
+                    <p>WorkPulse është një platformë moderne për aplikime punë që lehtëson lidhjen ndërmjet
+                        punëkërkuesve dhe kompanive, duke ofruar një proces të rregullt, transparent dhe efikas
+                        aplikimi deri në fazën e intervistës.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Lidhje të shpejta</h3>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i>Kryefaqja</a></li>
+                        <li><a href="index.html#features"><i class="fas fa-chevron-right"></i>Përse Ne?</a></li>
+                        <li><a href="index.html#how-it-works"><i class="fas fa-chevron-right"></i>Si Funksionon</a></li>
+                        <li><a href="apply.html"><i class="fas fa-chevron-right"></i>Vende punë</a></li>
+                        <li><a href="signin.html"><i class="fas fa-chevron-right"></i>Krijo llogari</a></li>
+                        <li><a href="terms.html"><i class="fas fa-chevron-right"></i>Kushtet e Përdorimit</a></li>
+                        <li><a href="privacy.html"><i class="fas fa-chevron-right"></i>Privatësia</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Kontakt</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-envelope"></i>info@workpulse.com</a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i>+383 44 123 456</a></li>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i>Prishtina, Kosovo</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2026 WorkPulse. Të gjitha të drejtat e rezervuara.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script/config.js"></script>
+    <script src="script/shared/api.js"></script>
+    <script src="script/shared/auth.js"></script>
+    <script src="script/shared/toast.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="script/shared/theme-manager.js"></script>
+    <script src="script/signin.js"></script>
+
+</body>
+
+</html>
