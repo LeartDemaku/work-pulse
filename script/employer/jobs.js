@@ -1,4 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', async () => {
   const user = await window.PlatformaAuth.requireAuth('employer');
   if (!user) return;
 
@@ -80,25 +80,26 @@
       month: 'short',
       day: 'numeric'
     });
-  }
-
-  function toLabelEmployment(value) {
+    function toLabelEmployment(value) {
     const map = {
       full_time: 'Full-time',
       part_time: 'Part-time',
-      internship: 'Internship',
-      contract: 'Contract'
+      internship: 'Praktikë',
+      contract: 'Me kontratë'
     };
-    return map[value] || value || '-';
+    if (!value || value === '-') return '';
+    return map[value] || value;
   }
 
   function toLabelWorkMode(value) {
     const map = {
-      onsite: 'On-site',
-      remote: 'Remote',
-      hybrid: 'Hybrid'
+      onsite: 'Në zyrë',
+      on_site: 'Në zyrë',
+      remote: 'Nga shtëpia',
+      hybrid: 'Hibrid'
     };
-    return map[value] || value || '-';
+    if (!value || value === '-') return '';
+    return map[value] || value;
   }
 
   function toLabelStatus(value) {
@@ -211,16 +212,26 @@
 
     jobsList.innerHTML = filtered.map((job) => {
       const deadlineTone = getDeadlineTone(job.deadlineAt);
+      const loc = job.location && job.location !== '-' ? job.location : null;
+      const emp = toLabelEmployment(job.employmentType);
+      const mode = toLabelWorkMode(job.workMode);
+
+      const metaParts = [];
+      if (loc) metaParts.push(`<span><i class="fa-solid fa-location-dot"></i> ${escapeHtml(loc)}</span>`);
+      if (emp) metaParts.push(`<span><i class="fa-solid fa-briefcase"></i> ${escapeHtml(emp)}</span>`);
+      if (mode) metaParts.push(`<span><i class="fa-solid fa-display"></i> ${escapeHtml(mode)}</span>`);
+
+      const metaHtml = metaParts.length > 0 ? metaParts.join('') : '<span><i class="fa-solid fa-building"></i> Kompani</span>';
+
       return `
         <article class="job-card">
           <div class="job-top">
             <div>
               <h3 class="job-title">${escapeHtml(job.title)}</h3>
               <div class="job-meta">
-                <span><i class="fa-solid fa-location-dot"></i> ${escapeHtml(job.location || 'Pa lokacion')}</span>
-                <span><i class="fa-solid fa-briefcase"></i> ${escapeHtml(toLabelEmployment(job.employmentType))}</span>
-                <span><i class="fa-solid fa-display"></i> ${escapeHtml(toLabelWorkMode(job.workMode))}</span>
+                ${metaHtml}
               </div>
+            </div>`   </div>
             </div>
             <span class="badge status-${escapeHtml(job.status)}">${escapeHtml(toLabelStatus(job.status))}</span>
           </div>

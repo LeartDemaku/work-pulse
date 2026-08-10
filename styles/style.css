@@ -242,26 +242,29 @@ nav ul li a::after {
 }
 
 .btn-primary {
-    background: var(--primary);
-    color: white;
+    background-color: var(--primary) !important;
+    color: #ffffff !important;
+    border: 1px solid var(--primary) !important;
     box-shadow: var(--shadow-sm);
 }
 
 .btn-primary:hover {
-    background: var(--primary-hover);
+    background-color: var(--primary-dark) !important;
+    color: #ffffff !important;
+    border-color: var(--primary-dark) !important;
     transform: translateY(-1px);
     box-shadow: var(--shadow-md);
 }
 
 .btn-outline {
-    background: transparent;
-    border-color: var(--border-color);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
     color: var(--text-main);
 }
 
 .btn-outline:hover {
     border-color: var(--primary);
-    background: var(--bg-body);
+    background: var(--primary-tint);
     color: var(--primary);
 }
 
