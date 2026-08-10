@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   let allJobs = [];
 
-  // Koment: Menaxhim i menusë mobile dhe efektit të header-it gjatë scroll.
+  // Menaxhim i menusë mobile dhe efektit të header-it gjatë scroll.
   mobileMenuBtn?.addEventListener('click', () => {
     navMenu?.classList.toggle('active');
     const isOpen = navMenu?.classList.contains('active');
@@ -80,7 +80,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       month: 'short',
       day: 'numeric'
     });
-    function toLabelEmployment(value) {
+  }
+
+  function toLabelEmployment(value) {
     const map = {
       full_time: 'Full-time',
       part_time: 'Part-time',
@@ -125,6 +127,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   function renderEmptyState(message) {
+    if (!jobsList) return;
     jobsList.innerHTML = `
       <div class="empty-state">
         <i class="fa-solid fa-briefcase"></i>
@@ -140,10 +143,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     const paused = jobs.filter((job) => job.status === 'paused').length;
     const applications = jobs.reduce((sum, job) => sum + Number(job.applicationsCount || 0), 0);
 
-    metricTotal.textContent = String(total);
-    metricActive.textContent = String(active);
-    metricPaused.textContent = String(paused);
-    metricApplications.textContent = String(applications);
+    if (metricTotal) metricTotal.textContent = String(total);
+    if (metricActive) metricActive.textContent = String(active);
+    if (metricPaused) metricPaused.textContent = String(paused);
+    if (metricApplications) metricApplications.textContent = String(applications);
   }
 
   async function updateStatus(jobId, status) {
@@ -200,10 +203,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   function renderJobs(jobs) {
+    if (!jobsList) return;
+
     const filter = jobsStatusFilter?.value || 'all';
     const filtered = filter === 'all' ? jobs : jobs.filter((job) => job.status === filter);
 
-    jobsCountNote.textContent = `${filtered.length} shpallje`;
+    if (jobsCountNote) {
+      jobsCountNote.textContent = `${filtered.length} shpallje`;
+    }
 
     if (filtered.length === 0) {
       renderEmptyState(filter === 'all' ? 'Nuk keni ende shpallje' : 'Nuk ka shpallje për këtë status');
@@ -231,7 +238,6 @@ document.addEventListener('DOMContentLoaded', async () => {
               <div class="job-meta">
                 ${metaHtml}
               </div>
-            </div>`   </div>
             </div>
             <span class="badge status-${escapeHtml(job.status)}">${escapeHtml(toLabelStatus(job.status))}</span>
           </div>
@@ -259,9 +265,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   async function loadJobs() {
-    allJobs = await window.PlatformaApi.get('/api/employer/jobs');
-    updateMetrics(allJobs);
-    renderJobs(allJobs);
+    try {
+      allJobs = await window.PlatformaApi.get('/api/employer/jobs');
+      updateMetrics(allJobs);
+      renderJobs(allJobs);
+    } catch (error) {
+      renderEmptyState('Gabim gjatë ngarkimit të shpalljeve');
+      window.PlatformaToast.showToast('error', error?.payload?.message || 'Gabim gjatë ngarkimit të shpalljeve.');
+    }
   }
 
   addJobForm?.addEventListener('submit', async (e) => {
@@ -300,13 +311,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   try {
     await loadJobs();
   } catch (error) {
-    jobsList.innerHTML = `
-      <div class="empty-state">
-        <i class="fa-solid fa-triangle-exclamation"></i>
-        <h3>Patëm një problem</h3>
-        <p>Nuk mundëm të ngarkojmë shpalljet. Ju lutemi provoni përsëri.</p>
-      </div>
-    `;
+    renderEmptyState('Gabim gjatë ngarkimit të shpalljeve');
     window.PlatformaToast.showToast('error', error?.payload?.message || 'Gabim gjatë ngarkimit të shpalljeve.');
   }
 });
