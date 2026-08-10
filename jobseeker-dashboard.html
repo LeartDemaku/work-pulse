@@ -402,21 +402,21 @@
     }
 
     .status-withdrawn {
-      background: #f8fafc;
-      color: #64748b;
-      border-color: #cbd5e1;
+      background: var(--status-withdrawn-bg);
+      color: var(--status-withdrawn-text);
+      border-color: var(--status-withdrawn-border);
     }
 
     .status-offer {
-      background: #fff7ed;
-      color: #c2410c;
-      border-color: #fdba74;
+      background: var(--status-offer-bg);
+      color: var(--status-offer-text);
+      border-color: var(--status-offer-border);
     }
 
     .status-hired {
-      background: #ecfdf3;
-      color: #047857;
-      border-color: #86efac;
+      background: var(--status-hired-bg);
+      color: var(--status-hired-text);
+      border-color: var(--status-hired-border);
     }
 
     .recommendations {
@@ -665,7 +665,7 @@
           <div class="user-dropdown">
             <button class="user-btn" id="userMenuBtn">
               <span id="userDisplayName"></span>
-              <i class="fas fa-chevron-down" style="font-size: 0.8em; color: #64748b;"></i>
+              <i class="fas fa-chevron-down" style="font-size: 0.8em; color: var(--text-muted);"></i>
             </button>
             <div class="dropdown-content" id="userDropdown">
               <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Dil</a>
@@ -695,7 +695,7 @@
         </div>
       </div>
       <div class="hero-actions">
-        <a class="btn btn-primary btn-lg" style="background-color: #304cda; color: white;" href="apply.html"><i
+        <a class="btn btn-primary btn-lg" href="apply.html"><i
             class="fa-solid fa-magnifying-glass"></i> Gjej vende
           punë</a>
         <a class="btn btn-outline btn-lg" href="jobseeker-applications.html"><i class="fa-regular fa-folder-open"></i>

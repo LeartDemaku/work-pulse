@@ -127,7 +127,9 @@ const ThemeManager = {
         toggleBtn.id = id;
         toggleBtn.className = className;
         toggleBtn.setAttribute('aria-label', 'Toggle theme');
-        toggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        toggleBtn.innerHTML = currentTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        if (currentTheme === 'dark') toggleBtn.classList.add('dark');
         toggleBtn.addEventListener('click', () => this.toggleTheme());
         return toggleBtn;
     },

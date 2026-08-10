@@ -68,7 +68,7 @@
 }
 
 .dropdown-content a:hover {
-    background-color: #f1f5f9;
+    background-color: var(--primary-tint);
     color: var(--primary);
 }
 
@@ -314,7 +314,7 @@ nav ul li a::after {
 
 .search-bar-wrapper:hover {
     box-shadow: var(--shadow-md);
-    border-color: #BFDBFE;
+    border-color: var(--primary-light);
 }
 
 .search-bar-wrapper:focus-within {
@@ -352,7 +352,7 @@ nav ul li a::after {
 }
 
 .filter-btn:hover {
-    background: #E2E8F0;
+    background: var(--border-color);
     color: var(--text-main);
 }
 
@@ -414,7 +414,7 @@ nav ul li a::after {
 .job-card:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-lg);
-    border-color: #BFDBFE;
+    border-color: var(--primary-light);
 }
 
 .job-badge {
@@ -472,7 +472,7 @@ nav ul li a::after {
 
 .info-item i {
     font-size: 14px;
-    color: #CBD5E1;
+    color: var(--text-muted);
 }
 
 .btn-ripple {
@@ -745,11 +745,11 @@ nav ul li a::after {
 }
 
 .toast {
-    background: white;
+    background: var(--toast-bg);
     padding: 16px 20px;
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-lg);
-    border: 1px solid rgba(226, 232, 240, 0.9);
+    border: 1px solid var(--toast-border);
     display: flex;
     align-items: center;
     gap: 12px;
@@ -768,17 +768,17 @@ nav ul li a::after {
 }
 
 .toast.success .toast-icon {
-    background: #ECFDF5;
+    background: var(--success-tint);
     color: var(--success);
 }
 
 .toast.error .toast-icon {
-    background: #FEF2F2;
+    background: var(--error-tint);
     color: var(--error);
 }
 
 .toast.warning .toast-icon {
-    background: #FFFBEB;
+    background: var(--warning-tint);
     color: var(--warning);
 }
 
@@ -789,20 +789,20 @@ nav ul li a::after {
 .toast-title {
     font-size: 14px;
     font-weight: 600;
-    color: var(--text-main);
+    color: var(--toast-title);
     line-height: 1.4;
 }
 
 .toast-message {
     font-size: 13px;
-    color: var(--text-muted);
+    color: var(--toast-message);
     margin-top: 2px;
 }
 
 .toast-close {
     background: none;
     border: none;
-    color: var(--text-light);
+    color: var(--text-muted);
     cursor: pointer;
     padding: 4px;
     transition: 0.2s;
@@ -810,7 +810,7 @@ nav ul li a::after {
 
 .toast-close:hover {
     color: var(--text-main);
-    background: #F1F5F9;
+    background: var(--primary-tint);
     border-radius: 4px;
 }
 

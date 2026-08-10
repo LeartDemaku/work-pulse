@@ -254,8 +254,8 @@
         text-align: left;
         gap: 20px;
         padding: 20px;
-        border: 1px solid #E2E8F0;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-sm);
     }
 
     .step-number {

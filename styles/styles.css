@@ -393,7 +393,7 @@ nav ul li a::after {
     gap: 12px;
     padding: 12px 20px;
     flex: 1;
-    border-right: 1px solid #E2E8F0;
+    border-right: 1px solid var(--border-color);
 }
 
 .search-input-group:last-of-type {
@@ -415,7 +415,7 @@ nav ul li a::after {
 }
 
 .search-input-group input::placeholder {
-    color: #94A3B8;
+    color: var(--text-muted);
 }
 
 .btn-search {
@@ -459,7 +459,7 @@ nav ul li a::after {
 .stat-divider {
     width: 1px;
     height: 40px;
-    background: linear-gradient(to bottom, transparent, #CBD5E1, transparent);
+    background: linear-gradient(to bottom, transparent, var(--border-color), transparent);
 }
 
 .hero-visual {
@@ -1193,7 +1193,7 @@ footer {
 
     .search-input-group {
         border-right: none;
-        border-bottom: 1px solid #E2E8F0;
+        border-bottom: 1px solid var(--border-color);
     }
 
     .search-input-group:last-of-type {

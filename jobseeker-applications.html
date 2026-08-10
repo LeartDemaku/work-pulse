@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="sq">
 
 <head>
@@ -454,28 +454,33 @@
     }
 
     .status-viewed {
-      background: #fef3c7;
-      color: #92400e;
+      background: var(--status-reviewing-bg);
+      color: var(--status-reviewing-text);
+      border-color: var(--status-reviewing-border);
     }
 
     .status-offer {
-      background: #f3e8ff;
-      color: #7c3aed;
+      background: var(--status-offer-bg);
+      color: var(--status-offer-text);
+      border-color: var(--status-offer-border);
     }
 
     .status-hired {
-      background: #86efac;
-      color: #166534;
+      background: var(--status-hired-bg);
+      color: var(--status-hired-text);
+      border-color: var(--status-hired-border);
     }
 
     .status-rejected {
-      background: #fee2e2;
-      color: #991b1b;
+      background: var(--status-rejected-bg);
+      color: var(--status-rejected-text);
+      border-color: var(--status-rejected-border);
     }
 
     .status-withdrawn {
-      background: #f1f5f9;
-      color: #64748b;
+      background: var(--status-withdrawn-bg);
+      color: var(--status-withdrawn-text);
+      border-color: var(--status-withdrawn-border);
     }
 
     .card-body {
@@ -488,7 +493,8 @@
       font-family: "Manrope", monospace;
       font-size: 12px;
       color: var(--js-muted);
-      background: #f1f5f9;
+      background: var(--bg-body);
+      border: 1px solid var(--border-color);
       padding: 4px 10px;
       border-radius: 6px;
       margin-bottom: 16px;
@@ -507,12 +513,12 @@
     }
 
     .timeline::-webkit-scrollbar-track {
-      background: #f1f5f9;
+      background: var(--bg-body);
       border-radius: 2px;
     }
 
     .timeline::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
+      background: var(--border-color);
       border-radius: 2px;
     }
 
@@ -521,7 +527,8 @@
       align-items: center;
       gap: 8px;
       padding: 8px 12px;
-      background: #f8fafc;
+      background: var(--bg-body);
+      border: 1px solid var(--border-color);
       border-radius: 8px;
       font-size: 12px;
       color: var(--js-muted);
@@ -535,8 +542,9 @@
     }
 
     .timeline-item.current {
-      background: #dbeafe;
-      color: #1e40af;
+      background: var(--primary-tint);
+      color: var(--primary);
+      border-color: var(--primary);
       font-weight: 700;
     }
 
@@ -746,7 +754,7 @@
           <div class="user-dropdown">
             <button class="user-btn" id="userMenuBtn">
               <span id="userDisplayName"></span>
-              <i class="fas fa-chevron-down" style="font-size: 0.8em; color: #64748b;"></i>
+              <i class="fas fa-chevron-down" style="font-size: 0.8em; color: var(--text-muted);"></i>
             </button>
             <div class="dropdown-content" id="userDropdown">
               <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Dil</a>

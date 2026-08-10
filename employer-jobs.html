@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="sq">
 
 <head>
@@ -449,9 +449,9 @@
     }
 
     .job-card:hover {
-      border-color: #9dbcf6;
+      border-color: var(--primary);
       transform: translateY(-1px);
-      box-shadow: 0 16px 28px -24px rgba(37, 99, 235, 0.62);
+      box-shadow: var(--shadow-md);
     }
 
     .job-top {
@@ -487,27 +487,27 @@
     }
 
     .status-active {
-      background: #ecfdf3;
-      color: #047857;
-      border-color: #86efac;
+      background: var(--status-active-bg);
+      color: var(--status-active-text);
+      border-color: var(--status-active-border);
     }
 
     .status-draft {
-      background: #eff6ff;
-      color: #1d4ed8;
-      border-color: #bfdbfe;
+      background: var(--status-draft-bg);
+      color: var(--status-draft-text);
+      border-color: var(--status-draft-border);
     }
 
     .status-paused {
-      background: #fff7ed;
-      color: #c2410c;
-      border-color: #fdba74;
+      background: var(--status-paused-bg);
+      color: var(--status-paused-text);
+      border-color: var(--status-paused-border);
     }
 
     .status-closed {
-      background: #fef2f2;
-      color: #b91c1c;
-      border-color: #fecaca;
+      background: var(--status-closed-bg);
+      color: var(--status-closed-text);
+      border-color: var(--status-closed-border);
     }
 
     .job-bottom {
@@ -518,7 +518,7 @@
       flex-wrap: wrap;
       margin-top: 10px;
       padding-top: 10px;
-      border-top: 1px solid #e2e8f0;
+      border-top: 1px solid var(--border-color);
     }
 
     .job-stats {
@@ -529,30 +529,30 @@
 
     .stat-pill {
       font-size: 0.78rem;
-      color: #1e3a8a;
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
+      color: var(--status-draft-text);
+      background: var(--status-draft-bg);
+      border: 1px solid var(--status-draft-border);
       border-radius: 999px;
       padding: 5px 9px;
       font-weight: 700;
     }
 
     .stat-pill.safe {
-      background: #ecfdf3;
-      color: #047857;
-      border-color: #86efac;
+      background: var(--status-active-bg);
+      color: var(--status-active-text);
+      border-color: var(--status-active-border);
     }
 
     .stat-pill.warn {
-      background: #fff7ed;
-      color: #c2410c;
-      border-color: #fdba74;
+      background: var(--status-paused-bg);
+      color: var(--status-paused-text);
+      border-color: var(--status-paused-border);
     }
 
     .stat-pill.danger {
-      background: #fef2f2;
-      color: #b91c1c;
-      border-color: #fecaca;
+      background: var(--status-closed-bg);
+      color: var(--status-closed-text);
+      border-color: var(--status-closed-border);
     }
 
     .job-actions {
@@ -568,15 +568,15 @@
     }
 
     .job-actions .delete-btn {
-      border-color: #fecaca;
-      color: #b91c1c;
-      background: #fff5f5;
+      border-color: var(--status-closed-border);
+      color: var(--status-closed-text);
+      background: var(--status-closed-bg);
     }
 
     .job-actions .delete-btn:hover {
-      border-color: #ef4444;
+      border-color: var(--error);
       color: #ffffff;
-      background: #dc2626;
+      background: var(--error);
     }
 
     .empty-state {
@@ -699,11 +699,11 @@
         </nav>
         <div class="nav-buttons">
           <a href="employer-dashboard.html" class="btn btn-outline"
-            style="margin-right: 12px; border-radius: 8px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; padding: 8px 16px; border: 1px solid #4c4c4c; color: #135ee9; transition: all 0.2s;">Paneli</a>
+            style="margin-right: 12px;">Paneli</a>
           <div class="user-dropdown">
             <button class="user-btn" id="userMenuBtn">
               <span id="userDisplayName"></span>
-              <i class="fas fa-chevron-down" style="font-size: 0.8em; color: #64748b;"></i>
+              <i class="fas fa-chevron-down" style="font-size: 0.8em; color: var(--text-muted);"></i>
             </button>
             <div class="dropdown-content" id="userDropdown">
               <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Dil</a>
@@ -731,7 +731,7 @@
         </div>
       </div>
       <div class="hero-cta">
-        <button class="btn btn-primary btn-lg" style="background-color: #304cda; color: white; border-radius: 15px;"
+        <button class="btn btn-primary btn-lg"
           id="focusCreateJobBtn"><i class="fa-solid fa-plus"></i>
           Krijo shpallje</button>
         <a class="btn btn-outline btn-lg" href="employer-applications.html"><i class="fa-solid fa-users"></i> Shiko
