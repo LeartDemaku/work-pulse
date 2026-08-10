@@ -476,6 +476,7 @@ input:focus {
 }
 
 .oauth-block {
+    position: relative;
     display: grid;
     justify-items: center;
     gap: 8px;
@@ -483,13 +484,23 @@ input:focus {
 }
 
 .google-btn-wrap {
-    min-height: 1px;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
     position: absolute;
-    opacity: 0;
-    pointer-events: none;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 320px;
+    height: 46px;
+    opacity: 0.001;
+    z-index: 10;
+    overflow: hidden;
+    pointer-events: auto;
+}
+
+.google-btn-wrap iframe {
+    width: 100% !important;
+    height: 100% !important;
+    cursor: pointer !important;
 }
 
 .oauth-note {

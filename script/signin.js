@@ -412,12 +412,23 @@ document.addEventListener('DOMContentLoaded', async function () {
       googleTokenClient = window.google.accounts.oauth2.initTokenClient({
         client_id: config.clientId,
         scope: 'openid email profile',
+        error_callback: (err) => {
+          if (err?.type === 'origin_mismatch' || String(err).includes('origin')) {
+            showLoginMessage('error', 'Google Auth origin_mismatch: Shtoni ' + window.location.origin + ' tek Authorized JavaScript origins ne Google Cloud Console.');
+          } else {
+            showLoginMessage('error', 'Google popup u mbyll ose dështoi.');
+          }
+        },
         callback: (tokenResponse) => {
           const sourceTab = googleIntentTab || (signupPane.style.display === 'none' ? 'login' : 'signup');
           googleIntentTab = 'login';
 
           if (tokenResponse?.error) {
-            showLoginMessage('error', 'Google popup u mbyll ose dështoi. Provoni përsëri.');
+            if (tokenResponse.error === 'origin_mismatch' || tokenResponse.error_description?.includes('origin')) {
+              showLoginMessage('error', 'Google Auth origin_mismatch: Shtoni ' + window.location.origin + ' tek Authorized JavaScript origins ne Google Cloud Console.');
+            } else {
+              showLoginMessage('error', 'Google popup u mbyll ose dështoi. Provoni përsëri.');
+            }
             return;
           }
 
@@ -465,13 +476,13 @@ document.addEventListener('DOMContentLoaded', async function () {
       setTab(sourceTab === 'signup' ? 'signup' : 'login');
 
       try {
-        if (googleTokenClient) {
-          googleTokenClient.requestAccessToken({ prompt: 'select_account' });
+        const targetContainer = sourceTab === 'signup' ? signupContainer : loginContainer;
+        if (clickNativeGoogleButton(targetContainer)) {
           return;
         }
 
-        const fallbackContainer = sourceTab === 'signup' ? signupContainer : loginContainer;
-        if (clickNativeGoogleButton(fallbackContainer)) {
+        if (googleTokenClient) {
+          googleTokenClient.requestAccessToken({ prompt: 'select_account' });
           return;
         }
 
