@@ -32,7 +32,6 @@ const sampleJobs = [
   }
 ];
 
-// Koment: Seed krijon admin, kompani demo dhe disa shpallje fillestare.
 export async function ensureSeedData(db = dbClient) {
   const adminEmail = 'admin@platforma.local';
   const admin = db.get('SELECT id FROM users WHERE email = ?', [adminEmail]);

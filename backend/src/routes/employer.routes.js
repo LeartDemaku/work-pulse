@@ -125,9 +125,18 @@ router.get('/employer/jobs', asyncHandler(async (req, res) => {
     `SELECT
       j.id,
       j.title,
+      j.company,
       j.status,
       j.location,
       j.positions,
+      j.description,
+      j.employment_type AS employmentType,
+      j.experience_level AS experienceLevel,
+      j.work_mode AS workMode,
+      j.salary_min AS salaryMin,
+      j.salary_max AS salaryMax,
+      j.currency,
+      j.required_skills_json AS requiredSkillsJson,
       j.created_at AS createdAt,
       j.deadline_at AS deadlineAt,
       COUNT(a.id) AS applicationsCount
@@ -139,7 +148,50 @@ router.get('/employer/jobs', asyncHandler(async (req, res) => {
     [company.id]
   );
 
-  return res.json(rows);
+  const formatted = rows.map((job) => ({
+    ...job,
+    requiredSkills: parseSkills(job.requiredSkillsJson)
+  }));
+
+  return res.json(formatted);
+}));
+
+router.get('/employer/jobs/:id', jobIdParamValidator, validateRequest, asyncHandler(async (req, res) => {
+  const company = getEmployerCompanyOrThrow(req.user.id);
+  const job = dbClient.get(
+    `SELECT
+      j.id,
+      j.title,
+      j.company,
+      j.status,
+      j.location,
+      j.positions,
+      j.description,
+      j.employment_type AS employmentType,
+      j.experience_level AS experienceLevel,
+      j.work_mode AS workMode,
+      j.salary_min AS salaryMin,
+      j.salary_max AS salaryMax,
+      j.currency,
+      j.required_skills_json AS requiredSkillsJson,
+      j.created_at AS createdAt,
+      j.deadline_at AS deadlineAt,
+      COUNT(a.id) AS applicationsCount
+     FROM jobs j
+     LEFT JOIN applications a ON a.job_id = j.id
+     WHERE j.id = ? AND j.company_id = ?
+     GROUP BY j.id`,
+    [req.params.id, company.id]
+  );
+
+  if (!job) {
+    return res.status(404).json({ success: false, message: 'Shpallja nuk u gjet.' });
+  }
+
+  return res.json({
+    ...job,
+    requiredSkills: parseSkills(job.requiredSkillsJson)
+  });
 }));
 
 router.post('/employer/jobs', createOrUpdateJobValidator, validateRequest, asyncHandler(async (req, res) => {
@@ -311,7 +363,6 @@ router.delete('/employer/jobs/:id', jobIdParamValidator, validateRequest, asyncH
     return res.status(404).json({ success: false, message: 'Shpallja nuk u gjet.' });
   }
 
-  // Koment: Fshirje e plote e shpalljes bashke me aplikimet dhe records te lidhura.
   dbClient.transaction((trx) => {
     trx.run(
       'DELETE FROM application_notes WHERE application_id IN (SELECT id FROM applications WHERE job_id = ?)',

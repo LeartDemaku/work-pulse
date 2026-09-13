@@ -27,7 +27,6 @@ export function createApp() {
 
   app.use(helmet({
     crossOriginResourcePolicy: false,
-    // Koment: Google popup login kerkon opener policy qe lejon komunikimin me dritaren prind.
     crossOriginOpenerPolicy: { policy: 'same-origin-allow-popups' },
     contentSecurityPolicy: {
       directives: {
@@ -58,7 +57,6 @@ export function createApp() {
   app.use(express.json({ limit: '2mb' }));
   app.use(express.urlencoded({ extended: true }));
 
-  // Koment: Kufizim i pergjithshem vetem për API, jo për skedaret statik te frontend-it.
   const apiLimiter = rateLimit({
     windowMs: env.RATE_LIMIT_WINDOW_MS,
     max: env.RATE_LIMIT_MAX_REQUESTS,
@@ -119,7 +117,6 @@ export function createApp() {
   app.use('/api', jobSeekerRoutes);
   app.use('/api', contactRoutes);
 
-  // Koment: Endpoints te vjeter ruhen perkohesisht për pajtueshmeri me frontend aktual.
   app.post('/api/register', authAttemptLimiter, (req, res, next) => {
     req.url = '/register';
     authRoutes(req, res, next);
@@ -130,13 +127,11 @@ export function createApp() {
     authRoutes(req, res, next);
   });
 
-  // Koment: Legacy endpoint - rate limiting handled in applicationsRoutes
   app.post('/api/apply', (req, res, next) => {
     req.url = '/applications';
     applicationsRoutes(req, res, next);
   });
 
-  // Koment: CV-te nuk servohen si skedare statike; qasja behet vetem me endpoint-in e autorizuar.
   app.use('/backend/uploads', (_req, res) => {
     return res.status(404).json({ success: false, message: 'Burimi nuk u gjet.' });
   });

@@ -1,4 +1,3 @@
-// Koment: Sanitizim i thjeshte per te shmangur script injeksione ne pershkrime.
 export function sanitizeHtml(input) {
   const value = String(input || '');
 

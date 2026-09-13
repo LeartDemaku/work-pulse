@@ -146,6 +146,114 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
   }
 
+  function formatJobDescription(raw) {
+    if (!raw || !String(raw).trim()) {
+      return '<p class="job-desc-paragraph">Nuk ka përshkrim të detajuar për këtë pozitë.</p>';
+    }
+
+    const trimmed = String(raw).trim();
+    const hasHtml = /<(p|br|div|ul|ol|li|strong|b|em|h[1-6])\b[^>]*>/i.test(trimmed);
+    if (hasHtml) {
+      return trimmed
+        .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, '')
+        .replace(/on\w+\s*=\s*"[^"]*"/gi, '')
+        .replace(/on\w+\s*=\s*'[^']*'/gi, '')
+        .replace(/javascript:/gi, '');
+    }
+
+    const normalized = trimmed.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+    const lines = normalized.split('\n');
+
+    const headingKeywordsRegex = /^(detyrat|përgjegjësitë|pergjegjesite|kualifikimet|kriteret|kërkesat|kerkesat|çfarë ofrojmë|cfare ofrojme|çfarë ofron|cfare ofron|përfitimet|perfitimet|benefitet|si të aplikoni|si te aplikoni|mënyra e aplikimit|menyra e aplikimit|rreth nesh|rreth kompanisë|rreth kompanise|rreth rolit|përshkrimi i rolit|pershkrimi i rolit|responsibilities|key responsibilities|additional responsibilities|requirements|qualifications|your profile|profile|what we offer|how to apply|about us|about the role)\b/i;
+
+    const isHeadingLine = (line) => {
+      const l = line.trim();
+      if (!l) return false;
+      if (l.length > 90) return false;
+      if (headingKeywordsRegex.test(l)) return true;
+      if (l.endsWith(':') || l.endsWith('?')) {
+        if (!l.includes('.') && l.length <= 80) return true;
+      }
+      return false;
+    };
+
+    const isBulletLine = (line) => {
+      const l = line.trim();
+      return /^[-*•–—›»]\s+/.test(l) || /^\d+[\.\)]\s+/.test(l);
+    };
+
+    const cleanBulletText = (line) => {
+      return line.trim().replace(/^[-*•–—›»]\s+/, '').replace(/^\d+[\.\)]\s+/, '');
+    };
+
+    const linkify = (text) => {
+      return text.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" class="job-desc-link">$1</a>');
+    };
+
+    let html = '';
+    let inList = false;
+    let inListSection = false;
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (!line) {
+        if (inList) {
+          html += '</ul>';
+          inList = false;
+        }
+        continue;
+      }
+
+      if (isHeadingLine(line)) {
+        if (inList) {
+          html += '</ul>';
+          inList = false;
+        }
+        const lower = line.toLowerCase();
+        const isParagraphHeading = lower.includes('si të aplikoni') || lower.includes('si te aplikoni') || lower.includes('how to apply') || lower.includes('about the role') || lower.includes('rreth rolit') || lower.includes('rreth nesh');
+        inListSection = !isParagraphHeading;
+        const cleanTitle = line.replace(/[:]$/, '');
+        html += `<div class="job-desc-heading"><i class="fa-solid fa-circle-check"></i><span>${escapeHtml(cleanTitle)}</span></div>`;
+        continue;
+      }
+
+      if (isBulletLine(line)) {
+        if (!inList) {
+          html += '<ul class="job-desc-list">';
+          inList = true;
+        }
+        html += `<li><span class="bullet-dot"></span><span class="bullet-text">${linkify(escapeHtml(cleanBulletText(line)))}</span></li>`;
+        continue;
+      }
+
+      if (inListSection) {
+        if (line.length < 250 && !line.endsWith(':')) {
+          if (!inList) {
+            html += '<ul class="job-desc-list">';
+            inList = true;
+          }
+          html += `<li><span class="bullet-dot"></span><span class="bullet-text">${linkify(escapeHtml(line))}</span></li>`;
+          continue;
+        } else {
+          inListSection = false;
+        }
+      }
+
+      if (inList) {
+        html += '</ul>';
+        inList = false;
+      }
+      inListSection = false;
+      html += `<p class="job-desc-paragraph">${linkify(escapeHtml(line))}</p>`;
+    }
+
+    if (inList) {
+      html += '</ul>';
+    }
+
+    return html;
+  }
+
   function attachApplyListeners() {
     document.querySelectorAll('.apply-trigger').forEach((btn) => {
       btn.addEventListener('click', function () {
@@ -159,7 +267,33 @@ document.addEventListener('DOMContentLoaded', async function () {
         form.dataset.currentJobTitle = job.title;
 
         const descriptionContainer = document.getElementById('jobDescriptionContent');
-        descriptionContainer.textContent = job.description || 'Nuk ka pershkrim te detajuar per kete pozite.';
+        if (descriptionContainer) {
+          descriptionContainer.innerHTML = formatJobDescription(job.description);
+        }
+
+        let ownerBanner = document.getElementById('employerJobEditBanner');
+        if (currentUser && currentUser.role === 'employer') {
+          if (!ownerBanner) {
+            ownerBanner = document.createElement('div');
+            ownerBanner.id = 'employerJobEditBanner';
+            const descSection = document.querySelector('.job-description-section');
+            if (descSection) {
+              descSection.parentNode.insertBefore(ownerBanner, descSection);
+            }
+          }
+          ownerBanner.innerHTML = `
+            <div style="background: var(--primary-tint); border: 1px solid var(--primary); border-radius: 14px; padding: 16px 20px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+              <div>
+                <div style="font-weight: 700; color: var(--text-main); font-size: 1rem;"><i class="fa-solid fa-pen-to-square" style="color: var(--primary); margin-right: 8px;"></i> Dëshironi të modifikoni këtë shpallje?</div>
+                <div style="font-size: 0.86rem; color: var(--text-muted); margin-top: 2px;">Nëse keni nevojë të përmirësoni përshkrimin, kërkesat apo kriteret, mund ta bëni menjëherë nga paneli juaj.</div>
+              </div>
+              <a href="employer-jobs.html?edit=${job.id}" class="btn btn-primary" style="font-size: 0.88rem; padding: 8px 18px;"><i class="fa-solid fa-pen"></i> Edito Shpalljen</a>
+            </div>
+          `;
+          ownerBanner.style.display = 'block';
+        } else if (ownerBanner) {
+          ownerBanner.style.display = 'none';
+        }
 
         if (currentUser && currentUser.role === 'job_seeker') {
           prefillFromProfile().catch(() => null);
@@ -178,9 +312,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       if (profile.city) {
         document.getElementById('city').value = profile.city;
       }
-    } catch (_error) {
-      // Koment: Mungesa e profilit nuk e bllokon aplikimin.
-    }
+    } catch (_error) {}
   }
 
   try {

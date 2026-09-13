@@ -81,7 +81,6 @@ function run(sql, params = []) {
   ensureInitialized();
   db.run(sql, params);
 
-  // Koment: changes() jep numrin real te rreshtave te prekur ne SQLite.
   const changesRow = db.exec('SELECT changes() AS count');
   const lastRow = db.exec('SELECT last_insert_rowid() AS id');
 

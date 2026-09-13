@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     mobileMenuBtn.innerHTML = isOpen ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
   });
 
-  // User Dropdown Logic
   const userMenuBtn = document.getElementById('userMenuBtn');
   const userDropdown = document.getElementById('userDropdown');
   const userDisplayName = document.getElementById('userDisplayName');
@@ -57,6 +56,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const data = await window.PlatformaApi.get('/api/employer/dashboard');
     renderMetrics(metricsEl, data);
     renderExpiringJobs(expiringEl, data.expiringJobs || []);
+    renderCompanyPlan();
   } catch (error) {
     renderMetrics(metricsEl, {
       activeJobs: 0,
@@ -65,6 +65,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
     renderError(expiringEl);
     window.PlatformaToast.showToast('error', error?.payload?.message || 'Gabim gjatë ngarkimit të dashboard-it.');
+    renderCompanyPlan();
   }
 });
 
@@ -130,7 +131,10 @@ function renderExpiringJobs(container, jobs) {
           <div class="job-title">${safeTitle}</div>
           <div class="job-meta">Afati: ${deadline}</div>
         </div>
-        <span class="deadline-badge ${urgency.className}">${urgency.label}</span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span class="deadline-badge ${urgency.className}">${urgency.label}</span>
+          <a href="employer-jobs.html?edit=${job.id}" class="btn btn-outline" style="font-size: 0.76rem; padding: 4px 10px;" title="Modifiko këtë shpallje"><i class="fa-solid fa-pen-to-square"></i> Edito</a>
+        </div>
       </article>
     `;
   }).join('');
@@ -168,7 +172,6 @@ function getUrgency(value) {
     };
   }
 
-  // Koment: Statusi i afatit përcaktohet sipas ditëve që kanë mbetur.
   const dayMs = 24 * 60 * 60 * 1000;
   const now = new Date();
   const daysLeft = Math.ceil((date.getTime() - now.getTime()) / dayMs);
@@ -197,4 +200,85 @@ function escapeHtml(text) {
   const div = document.createElement('div');
   div.textContent = text || '';
   return div.innerHTML;
+}
+
+function renderCompanyPlan() {
+  const container = document.getElementById('companyPlanSection');
+  if (!container) return;
+
+  const raw = localStorage.getItem('activeCompanyPlan');
+  let plan = null;
+  if (raw) {
+    try {
+      plan = JSON.parse(raw);
+    } catch (_e) {}
+  }
+
+  if (plan) {
+    const isMonthly = plan.planId === 'subscription' || plan.planId === 'enterprise';
+    const quotaText = isMonthly 
+      ? (plan.planId === 'enterprise' ? 'Oferta pa limit (Integrim API)' : 'Deri në 10 oferta të aktivizuara në çdo kohë')
+      : '1 ofertë pune standarde (30 ditë)';
+
+    container.innerHTML = `
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 14px; margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 44px; height: 44px; border-radius: 12px; background: var(--primary-tint); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">
+            <i class="fa-solid fa-crown"></i>
+          </div>
+          <div>
+            <h2 style="font-family: 'Sora', sans-serif; font-size: 1.15rem; margin-bottom: 2px;">${escapeHtml(plan.planTitle)}</h2>
+            <div style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-muted);">
+              <span>ID: <strong>${escapeHtml(plan.orderId || '-')}</strong></span>
+              <span>•</span>
+              <span style="color: var(--success); font-weight: 700;"><i class="fa-solid fa-circle-check"></i> ${escapeHtml(plan.status || 'Aktiv')}</span>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <a href="pricing.html" class="btn btn-outline" style="font-size: 0.84rem; padding: 7px 14px;">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Ndrysho Paketën
+          </a>
+          <a href="employer-jobs.html" class="btn btn-primary" style="font-size: 0.84rem; padding: 7px 14px;">
+            <i class="fa-solid fa-plus"></i> Posto Punë
+          </a>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px;">
+        <div style="background: var(--bg-body); border: 1px solid var(--border-color); border-radius: 12px; padding: 12px 14px;">
+          <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 2px;">ÇMIMI & MODELI</div>
+          <div style="font-size: 1.05rem; font-weight: 800; color: var(--text-main);">${escapeHtml(plan.price)} <span style="font-size: 0.8rem; font-weight: 500; color: var(--text-muted);">${escapeHtml(plan.period || '')}</span></div>
+        </div>
+        <div style="background: var(--bg-body); border: 1px solid var(--border-color); border-radius: 12px; padding: 12px 14px;">
+          <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 2px;">KUOTA E SHPALLJEVE</div>
+          <div style="font-size: 0.95rem; font-weight: 700; color: var(--text-main);">${quotaText}</div>
+        </div>
+        <div style="background: var(--bg-body); border: 1px solid var(--border-color); border-radius: 12px; padding: 12px 14px;">
+          <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 2px;">AKTIVIZUAR MË</div>
+          <div style="font-size: 0.95rem; font-weight: 700; color: var(--text-main);">${escapeHtml(plan.activatedAt || '-')}</div>
+        </div>
+        <div style="background: var(--bg-body); border: 1px solid var(--border-color); border-radius: 12px; padding: 12px 14px;">
+          <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 2px;">METODA E PAGESËS</div>
+          <div style="font-size: 0.95rem; font-weight: 700; color: var(--text-main);">${escapeHtml((plan.paymentMethod || 'card').toUpperCase())}</div>
+        </div>
+      </div>
+    `;
+  } else {
+    container.innerHTML = `
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <div style="width: 48px; height: 48px; border-radius: 14px; background: var(--primary-tint); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.3rem;">
+            <i class="fa-solid fa-briefcase"></i>
+          </div>
+          <div>
+            <h3 style="font-family: 'Sora', sans-serif; font-size: 1.05rem; margin-bottom: 2px;">Zgjidhni paketën e shpalljeve për kompaninë</h3>
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">Paketat fillojnë nga 30€ për ofertë të vetme deri në abonime mujore për rekrutim të rregullt.</p>
+          </div>
+        </div>
+        <a href="pricing.html" class="btn btn-primary" style="padding: 10px 20px; font-weight: 700;">
+          <i class="fa-solid fa-tags"></i> Shiko Çmimet & Paketat
+        </a>
+      </div>
+    `;
+  }
 }

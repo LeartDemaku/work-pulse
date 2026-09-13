@@ -1,5 +1,4 @@
 :root {
-    /* Use variables from theme.css */
     --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
     --shadow-md: var(--card-shadow);
     --shadow-lg: var(--hover-shadow);
@@ -9,7 +8,6 @@
     --radius-xl: 16px;
 }
 
-/* User Dropdown Styles */
 .user-dropdown {
     position: relative;
     display: inline-block;
@@ -608,6 +606,120 @@ nav ul li a::after {
     box-shadow: var(--shadow-md);
 }
 
+#jobDescriptionContent {
+    color: var(--text-main);
+    line-height: 1.75;
+    font-size: 15px;
+    word-break: break-word;
+    font-family: inherit;
+}
+
+#jobDescriptionContent .job-desc-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-top: 26px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#jobDescriptionContent .job-desc-heading:first-child {
+    margin-top: 0;
+}
+
+#jobDescriptionContent .job-desc-heading i {
+    color: var(--primary);
+    font-size: 0.95rem;
+    flex-shrink: 0;
+}
+
+#jobDescriptionContent .job-desc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 22px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#jobDescriptionContent .job-desc-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--text-main);
+}
+
+#jobDescriptionContent .job-desc-list .bullet-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    flex-shrink: 0;
+    margin-top: 9px;
+    box-shadow: 0 0 0 3px var(--primary-tint);
+}
+
+#jobDescriptionContent .job-desc-list .bullet-text {
+    flex: 1;
+}
+
+#jobDescriptionContent .job-desc-paragraph {
+    margin-bottom: 14px;
+    line-height: 1.7;
+    font-size: 0.96rem;
+    color: var(--text-main);
+}
+
+#jobDescriptionContent .job-desc-paragraph:last-child {
+    margin-bottom: 0;
+}
+
+#jobDescriptionContent .job-desc-link {
+    color: var(--primary);
+    text-decoration: underline;
+    font-weight: 600;
+    word-break: break-all;
+    transition: var(--transition);
+}
+
+#jobDescriptionContent .job-desc-link:hover {
+    color: var(--primary-dark);
+}
+
+#jobDescriptionContent ul:not(.job-desc-list),
+#jobDescriptionContent ol {
+    margin: 0 0 20px 20px;
+    padding: 0;
+    color: var(--text-main);
+}
+
+#jobDescriptionContent ul:not(.job-desc-list) li,
+#jobDescriptionContent ol li {
+    margin-bottom: 8px;
+    line-height: 1.65;
+}
+
+#jobDescriptionContent h3,
+#jobDescriptionContent h4,
+#jobDescriptionContent h5 {
+    color: var(--text-main);
+    font-weight: 700;
+    margin-top: 24px;
+    margin-bottom: 12px;
+}
+
+#jobDescriptionContent p:not(.job-desc-paragraph) {
+    margin-bottom: 14px;
+    line-height: 1.7;
+    color: var(--text-main);
+}
+
 .form-header {
     margin-bottom: 32px;
 }
@@ -972,7 +1084,6 @@ footer {
         width: 100%;
     }
 
-    /* Repaired Mobile Menu */
     nav ul {
         display: none;
         flex-direction: column;
