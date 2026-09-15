@@ -1,0 +1,81 @@
+# ====================================================================
+# .gitignore - WorkPulse (PunaIme) Platform
+# Ensures all sensitive, private, environment, and build artifacts
+# are strictly excluded from version control.
+# ====================================================================
+
+# Environment variables & secrets (NEVER EXPOSE CREDENTIALS)
+.env
+.env.*
+*.env
+!.env.example
+backend/.env
+backend/.env.*
+backend/*.env
+!backend/.env.example
+
+# Private user uploads & documents (CVs, Resumes, Portfolios)
+backend/uploads/*
+!backend/uploads/cv/.gitkeep
+uploads/
+*.pdf
+*.docx
+*.doc
+
+# Database files & local SQLite storage
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+backend/punaime.db
+backend/*.db
+backend/*.sqlite
+backend/*.sqlite3
+
+# Dependencies
+node_modules/
+backend/node_modules/
+*/node_modules/
+
+# Logs & debugging
+logs/
+backend/logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# SonarQube & Code Quality analysis cache
+.scannerwork/
+sonar-project.properties
+
+# Operating System files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# IDE & Editor specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+*.swo
+
+# Test coverage & build output
+coverage/
+.nyc_output/
+dist/
+build/
+tmp/
+temp/
